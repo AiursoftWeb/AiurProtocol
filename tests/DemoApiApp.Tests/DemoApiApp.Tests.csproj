@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aiursoft.WebTools" Version="6.0.22" />
+		
 		<PackageReference Include="coverlet.collector" Version="6.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\demo\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
+	  
 	  <ProjectReference Include="..\..\demo\DemoApiApp\DemoApiApp.csproj" />
 	</ItemGroup>
 
