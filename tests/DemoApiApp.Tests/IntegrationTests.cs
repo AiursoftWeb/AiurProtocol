@@ -65,6 +65,16 @@ public class IntegrationTests
     }
     
     [TestMethod]
+    public async Task TestQuery()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        var result = (await sdk?.QuerySomethingAsync("3")!).Items?.ToArray();
+        Assert.AreEqual(3, result?[0]);
+        Assert.AreEqual(13, result?[1]);
+        Assert.AreEqual(233, result?[2]);
+    }
+    
+    [TestMethod]
     public async Task TestGetANumber()
     {
         var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();

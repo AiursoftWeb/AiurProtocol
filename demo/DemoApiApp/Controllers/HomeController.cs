@@ -21,6 +21,15 @@ public class HomeController : ControllerBase
     {
         return this.Protocol(ErrorType.Success, "Got your value!", value: 123);
     }
+    
+    public IActionResult QuerySomething([FromQuery]string question)
+    {
+        var items = Fibonacci()
+            .Where(i => i.ToString().EndsWith(question))
+            .Take(10)
+            .ToList();
+        return this.Protocol(ErrorType.Success, "Got your value!", items);
+    }
 
     public IActionResult GetFibonacciFirst10()
     {

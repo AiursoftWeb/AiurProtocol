@@ -40,6 +40,16 @@ public class DemoAccess
         var result = await _http.Get<AiurValue<int>>(url, true);
         return result;
     }
+
+    public async Task<AiurCollection<int>> QuerySomethingAsync(string question)
+    {
+        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "QuerySomething", new
+        {
+            question
+        });
+        var result = await _http.Get<AiurCollection<int>>(url, true);
+        return result;
+    }
     
     public async Task<AiurCollection<int>> GetFibonacciFirst10Async()
     {

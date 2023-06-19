@@ -45,7 +45,10 @@ public class AiurApiClient : IScopedDependency
             onError: e => { _logger.LogWarning(e, "Transient issue (retry available) happened with remote server"); });
     }
 
-    public async Task<T> Get<T>(AiurApiEndpoint apiEndpoint, bool forceHttp = false, bool autoRetry = true)
+    public async Task<T> Get<T>(
+        AiurApiEndpoint apiEndpoint, 
+        bool forceHttp = false, 
+        bool autoRetry = true)
         where T : AiurResponse
     {
         if (forceHttp && !apiEndpoint.IsLocalhost())
@@ -65,7 +68,7 @@ public class AiurApiClient : IScopedDependency
         return await ProcessResponse<T>(response);
     }
 
-    // TODO: Do NOT sue the AiurApiEndpoint as post content.
+    // TODO: Do NOT use the AiurApiEndpoint as post content.
     public async Task<T> Post<T>(
         AiurApiEndpoint apiEndpoint, 
         AiurApiEndpoint postDataStr, 
