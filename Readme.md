@@ -11,26 +11,136 @@ AiurProtocol defines an API programming practice to easily build a RESTful API. 
 * Auto error handling
 * Auto input model validation
 
-And will support the following features in the future:
+## Why this project?
 
-* Client side format check
-* Api Localization
-* Api rate limit
-* Api version control
-* Api documentation
-* Api authorization
-* Api request log
-* Api request cache
+API development is a challenging task that requires handling various aspects such as HTTP status codes, error handling, input validation, documentation writing, and log checking. However, this project aims to simplify the API development process by providing a unified best practice approach. By following this approach, developers can efficiently handle HTTP status codes, error handling, input validation, documentation writing, and log checking. This project's goal is to save time and effort, allowing developers to focus more on developing new features.
 
-## How to Install
+## Installation
+
+Run the folloing command to install `Aiursoft.AiurProtocol` to your ASP.NET Core project from [nuget.org](https://www.nuget.org/packages/Aiursoft.AiurProtocol/):
+
+```bash
+dotnet add package Aiursoft.AiurProtocol
+```
 
 ## How to use on Server
 
-```csharp
-return this.Protocol();
+Now you can go to your Controller and return the protocol!
 
-throw new AiurApiModelException();
+```csharp
+using Aiursoft.AiurProtocol;
+
+public class HomeController : ControllerBase
+{
+    public IActionResult Index()
+    {
+        return this.Protocol(ErrorType.Success, "Welcome to this API project!");
+    }
+}
 ```
+
+## How to use it to build an SDK
+
+Now you need to write an SDK for your API.
+
+After creating a new class library project, add the dependencies:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+        <PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.0" />
+    </ItemGroup>
+</Project>
+```
+
+write the following method:
+
+```csharp
+using Aiursoft.AiurProtocol;
+using Microsoft.Extensions.DependencyInjection;
+
+public static IServiceCollection AddDemoService(this IServiceCollection services, string endPointUrl)
+{
+    services.AddAiurApiClient();
+    services.Configure<DemoServerConfig>(options => options.Instance = endPointUrl);
+    services.AddScoped<DemoAccess>();
+    return services;
+}
+
+public class DemoServerConfig
+{
+    public string Instance { get; set; } = string.Empty;
+}
+
+public class DemoAccess
+{
+    private readonly AiurProtocolClient _http;
+    private readonly DemoServerConfig _demoServerLocator;
+
+    public DemoAccess(
+        AiurProtocolClient http,
+        IOptions<DemoServerConfig> demoServerLocator)
+    {
+        _http = http;
+        _demoServerLocator = demoServerLocator.Value;
+    }
+
+    public async Task<AiurResponse> IndexAsync()
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance);
+        var result = await _http.Get<AiurResponse>(url);
+        return result;
+    }
+}
+```
+
+## How to use my new SDK
+
+Now you can write a new class lib to use your new SDK to call your server!
+
+```csharp
+// To get your SDK:
+var services = new ServiceCollection();
+services.AddDemoService(endpointUrl);
+var serviceProvider = services.BuildServiceProvider();
+var sdk = serviceProvider.GetRequiredService<DemoAccess>();
+
+// To use your SDK:
+var result = await sdk?.IndexAsync()!;
+```
+
+That's it! It will use your SDK to generate a new call to your server, and the result is right at your hand!
+
+## Advanced usage
+
+* API Design
+  * [Call with HTTP parameter](./inop.md)
+  * [Call with HTTP Post(Json)](./inop.md)
+  * [Call with HTTP Post(Form)](./inop.md)
+* Server Programming
+  * [Response complicated values](./inop.md)
+  * [Result paging](./inop.md)
+  * [Return expected error](./inop.md)
+  * [Unexpected error](./inop.md)
+  * [Input valid state checking](./inop.md)
+
+## Future features
+
+It will support the following features in the future:
+
+* Client side valid check
+* Api rate limit
+* Api version control
+* Api documentation
+* Api request logging and report
 
 ## How to contribute
 

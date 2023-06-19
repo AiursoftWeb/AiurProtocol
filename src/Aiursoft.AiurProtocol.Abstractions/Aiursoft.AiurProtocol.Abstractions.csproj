@@ -4,6 +4,19 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Version>6.0.0</Version>
+    <!--Nuget-->
+    <Company>Aiursoft</Company>
+    <Product>AiurProtocol</Product>
+    <Authors>anduin</Authors>
+    <Description>API Communication practice</Description>
+    <PackageTags>pactice api handling</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Aiursoft.AiurProtocol.Abstractions</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
