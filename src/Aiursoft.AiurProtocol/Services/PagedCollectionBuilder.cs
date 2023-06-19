@@ -13,7 +13,7 @@ namespace Aiursoft.AiurProtocol.Services
             string message)
         {
             List<T> items;
-            int count = 0;
+            int count;
             if (query is IAsyncEnumerable<T>)
             {
                 items = await query.Page(pager).ToListAsync();

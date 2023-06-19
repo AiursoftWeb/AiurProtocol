@@ -1,5 +1,4 @@
-﻿using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aiursoft.AiurProtocol.Services;

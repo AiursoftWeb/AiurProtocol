@@ -24,21 +24,21 @@ public class DemoAccess
     public async Task<AiurResponse> IndexAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance);
-        var result = await _http.Get<AiurResponse>(url, true);
+        var result = await _http.Get<AiurResponse>(url);
         return result;
     }
 
     public async Task<AiurResponse> InvalidResponseShouldNotSuccessAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "/Home/InvalidResponseShouldNotSuccess", new { });
-        var result = await _http.Get<AiurResponse>(url, true);
+        var result = await _http.Get<AiurResponse>(url);
         return result;
     }
 
     public async Task<AiurValue<int>> GetANumberAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "GetANumber", new { });
-        var result = await _http.Get<AiurValue<int>>(url, true);
+        var result = await _http.Get<AiurValue<int>>(url);
         return result;
     }
 
@@ -48,7 +48,7 @@ public class DemoAccess
         {
             question
         });
-        var result = await _http.Get<AiurCollection<int>>(url, true);
+        var result = await _http.Get<AiurCollection<int>>(url);
         return result;
     }
     
@@ -60,14 +60,14 @@ public class DemoAccess
             PageSize = pageSize,
             PageNumber = pageNumber
         });
-        var result = await _http.Get<AiurPagedCollection<int>>(url, true);
+        var result = await _http.Get<AiurPagedCollection<int>>(url);
         return result;
     }
 
     public async Task<AiurCollection<int>> GetFibonacciFirst10Async()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "GetFibonacciFirst10", new { });
-        var result = await _http.Get<AiurCollection<int>>(url, true);
+        var result = await _http.Get<AiurCollection<int>>(url);
         return result;
     }
 
@@ -79,7 +79,7 @@ public class DemoAccess
             Name = username,
             Password = password
         });
-        var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpFormBody, true);
+        var result = await _http.Post<RegisterViewModel>(url, form);
         return result;
     }
 
@@ -91,21 +91,21 @@ public class DemoAccess
             Name = username,
             Password = password
         });
-        var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpJsonBody, true);
+        var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpJsonBody);
         return result;
     }
 
     public async Task<AiurResponse> CrashKnownAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "CrashKnown", new { });
-        var result = await _http.Get<AiurResponse>(url, true);
+        var result = await _http.Get<AiurResponse>(url);
         return result;
     }
 
     public async Task<AiurResponse> CrashUnknownAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "CrashUnknown", new { });
-        var result = await _http.Get<AiurResponse>(url, true);
+        var result = await _http.Get<AiurResponse>(url);
         return result;
     }
 }

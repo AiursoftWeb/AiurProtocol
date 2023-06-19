@@ -1,7 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
@@ -9,6 +8,7 @@ using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Aiursoft.AiurProtocol.Services;
 
@@ -17,17 +17,21 @@ public class AiurApiClient : IScopedDependency
     private readonly HttpClient _client;
     private readonly RetryEngine _retryEngine;
     private readonly ILogger<AiurApiClient> _logger;
-    private readonly Regex _regex;
+    private readonly JsonSerializerSettings _jsonSettings;
 
     public AiurApiClient(
         RetryEngine retryEngine,
         IHttpClientFactory clientFactory,
         ILogger<AiurApiClient> logger)
     {
-        _regex = new Regex("^https://", RegexOptions.Compiled);
         _client = clientFactory.CreateClient();
         _retryEngine = retryEngine;
         _logger = logger;
+        _jsonSettings = new JsonSerializerSettings
+        {
+            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
     }
 
     private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
@@ -49,21 +53,14 @@ public class AiurApiClient : IScopedDependency
 
     public async Task<T> Get<T>(
         AiurApiEndpoint apiEndpoint,
-        bool forceHttp = false,
         bool autoRetry = true)
         where T : AiurResponse
     {
-        if (forceHttp && !apiEndpoint.IsLocalhost())
-        {
-            apiEndpoint.Address = _regex.Replace(apiEndpoint.Address, "http://");
-        }
-
         var request = new HttpRequestMessage(HttpMethod.Get, apiEndpoint.ToString())
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };
 
-        request.Headers.Add("X-Forwarded-Proto", "https");
         request.Headers.Add("accept", "application/json, text/html");
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
@@ -74,22 +71,15 @@ public class AiurApiClient : IScopedDependency
         AiurApiEndpoint apiEndpoint,
         ApiPayload payload,
         BodyFormat format = BodyFormat.HttpFormBody,
-        bool forceHttp = false,
         bool autoRetry = true) where T : AiurResponse
     {
-        if (forceHttp && !apiEndpoint.IsLocalhost())
-        {
-            apiEndpoint.Address = _regex.Replace(apiEndpoint.Address, "http://");
-        }
-
         var request = new HttpRequestMessage(HttpMethod.Post, apiEndpoint.ToString())
         {
             Content = format == BodyFormat.HttpFormBody
                 ? new FormUrlEncodedContent(payload.Params)
-                : new StringContent(JsonConvert.SerializeObject(payload.Param), Encoding.UTF8, "application/json")
+                : new StringContent(JsonConvert.SerializeObject(payload.Param, _jsonSettings), Encoding.UTF8, "application/json")
         };
 
-        request.Headers.Add("X-Forwarded-Proto", "https");
         request.Headers.Add("accept", "application/json");
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
@@ -104,19 +94,19 @@ public class AiurApiClient : IScopedDependency
             if (responseObject?.Code == ErrorType.Success)
             {
                 // Success.
-                var model = JsonConvert.DeserializeObject<T>(content)!;
+                var model = JsonConvert.DeserializeObject<T>(content, _jsonSettings)!;
                 return model;
             }
             if (responseObject?.Code == ErrorType.InvalidInput)
             {
                 // Invalid input.
-                var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content)!;
+                var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content, _jsonSettings)!;
                 throw new AiurBadApiInputException(model);
             }
             else
             {
                 // Other errors.
-                var model = JsonConvert.DeserializeObject<AiurResponse>(content)!;
+                var model = JsonConvert.DeserializeObject<AiurResponse>(content, _jsonSettings)!;
                 throw new AiurUnexpectedServerResponseException(model);
             }
         }

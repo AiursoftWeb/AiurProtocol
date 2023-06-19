@@ -77,14 +77,4 @@ public class AiurApiEndpoint : ApiPayload
             $"{c}{p.Key.ToLower()}={Uri.EscapeDataString(p.Value)}&");
         return Address + appendPart.TrimEnd('?', '&');
     }
-
-    public bool IsLocalhost()
-    {
-        return Address.StartsWith("http://localhost") ||
-               Address.StartsWith("https://localhost") ||
-               Address.StartsWith("http://127.0.0.1") ||
-               Address.StartsWith("https://127.0.0.1") ||
-               Address.StartsWith("http://::1") ||
-               Address.StartsWith("https://::1");
-    }
 }
