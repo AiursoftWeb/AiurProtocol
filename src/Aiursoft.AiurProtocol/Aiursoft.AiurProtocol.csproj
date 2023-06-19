@@ -11,6 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.18" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Aiursoft.AiurProtocol.Abstractions\Aiursoft.AiurProtocol.Abstractions.csproj" />
 	</ItemGroup>
 

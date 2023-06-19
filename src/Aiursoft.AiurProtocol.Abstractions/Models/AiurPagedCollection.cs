@@ -10,7 +10,7 @@ public class AiurPagedCollection<T> : AiurCollection<T>
     {
     }
 
-    public AiurPagedCollection(List<T> items) : base(items)
+    public AiurPagedCollection(IReadOnlyCollection<T> items) : base(items)
     {
     }
 

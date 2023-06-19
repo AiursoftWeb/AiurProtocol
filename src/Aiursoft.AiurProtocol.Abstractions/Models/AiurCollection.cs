@@ -10,10 +10,10 @@ public class AiurCollection<T> : AiurResponse
     {
     }
 
-    public AiurCollection(List<T> items)
+    public AiurCollection(IReadOnlyCollection<T> items)
     {
         Items = items;
     }
 
-    public List<T>? Items { get; set; }
+    public IReadOnlyCollection<T>? Items { get; set; }
 }
