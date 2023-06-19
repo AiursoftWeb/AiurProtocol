@@ -7,7 +7,7 @@ public static class Extensions
 {
     public static IServiceCollection AddDemoService(this IServiceCollection services, string endPointUrl)
     {
-        services.AddAiurApiClient();
+        services.AddAiurProtocolClient();
         services.Configure<DemoServerConfig>(options => options.Instance = endPointUrl);
         services.AddScoped<DemoAccess>();
         return services;

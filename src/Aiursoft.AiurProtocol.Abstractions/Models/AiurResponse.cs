@@ -5,7 +5,7 @@ namespace Aiursoft.AiurProtocol.Models;
 public class AiurResponse
 {
     [JsonProperty(Required = Required.Always)]
-    public ErrorType Code { get; set; }
+    public Code Code { get; set; }
     
     [JsonProperty(Required = Required.Always)]
     public string? Message { get; set; }

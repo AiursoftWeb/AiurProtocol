@@ -87,13 +87,13 @@ public class AiurProtocolClient : IScopedDependency
         {
             switch (responseObject?.Code)
             {
-                case ErrorType.Success:
+                case Code.Success:
                 {
                     // Success.
                     var model = JsonConvert.DeserializeObject<T>(content, ProtocolConsts.JsonSettings)!;
                     return model;
                 }
-                case ErrorType.InvalidInput:
+                case Code.InvalidInput:
                 {
                     // Invalid input.
                     var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content, ProtocolConsts.JsonSettings)!;

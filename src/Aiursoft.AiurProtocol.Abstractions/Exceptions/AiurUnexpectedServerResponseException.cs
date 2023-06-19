@@ -29,7 +29,7 @@ public class AiurBadApiInputException : AiurUnexpectedServerResponseException
             ?.Items?.Select(i => new InvalidOperationException(i)) 
             ?? throw new WebException("Failed to parse remote API response.")))
     {
-        if (response.Code != ErrorType.InvalidInput)
+        if (response.Code != Code.InvalidInput)
         {
             throw new InvalidOperationException(
                 $"The exception with type: '{nameof(AiurBadApiInputException)}' should not be thrown because the server returned result: {response.Code}.");

@@ -8,7 +8,7 @@ namespace Aiursoft.AiurProtocol.Exceptions;
 /// </summary>
 public class AiurServerException : Exception
 {
-    public AiurServerException(ErrorType code, string message) : base(message)
+    public AiurServerException(Code code, string message) : base(message)
     {
         Response = new AiurResponse
         {

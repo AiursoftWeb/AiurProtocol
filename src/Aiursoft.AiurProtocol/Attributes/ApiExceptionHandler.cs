@@ -31,7 +31,7 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
                 {
                     var maskedResponse = new AiurResponse
                     {
-                        Code = ErrorType.RemoteNotAccessible,
+                        Code = Code.RemoteNotAccessible,
                         Message = $"The {projectName} server crashed with a remote API not accessible. Sorry about that."
                     };
                     ProcessResult(context, maskedResponse);
@@ -47,7 +47,7 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
             default:
                 var response = new AiurResponse
                 {
-                    Code = ErrorType.UnknownError,
+                    Code = Code.UnknownError,
                     Message = $"The {projectName} server crashed with an unknown error. Sorry about that."
                 };
                 ProcessResult(context, response);

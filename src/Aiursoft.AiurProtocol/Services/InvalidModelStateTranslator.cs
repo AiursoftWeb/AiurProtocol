@@ -11,7 +11,7 @@ internal static class InvalidModelStateTranslator
         var list = (from value in modelState from error in value.Value.Errors select error.ErrorMessage).ToList();
         var arg = new AiurCollection<string>(list)
         {
-            Code = ErrorType.InvalidInput,
+            Code = Code.InvalidInput,
             Message = $"Multiple errors were found in the API input. ({list.Count} errors)"
         };
         return arg;

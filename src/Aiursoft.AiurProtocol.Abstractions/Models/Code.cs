@@ -1,6 +1,6 @@
 ﻿namespace Aiursoft.AiurProtocol.Models;
 
-public enum ErrorType
+public enum Code
 {
     Success = 0,
     WrongKey = -1,

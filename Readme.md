@@ -34,7 +34,7 @@ public class HomeController : ControllerBase
 {
     public IActionResult Index()
     {
-        return this.Protocol(ErrorType.Success, "Welcome to this API project!");
+        return this.Protocol(Code.Success, "Welcome to this API project!");
     }
 }
 ```
@@ -69,7 +69,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static IServiceCollection AddDemoService(this IServiceCollection services, string endPointUrl)
 {
-    services.AddAiurApiClient();
+    services.AddAiurProtocolClient();
     services.Configure<DemoServerConfig>(options => options.Instance = endPointUrl);
     services.AddScoped<DemoAccess>();
     return services;

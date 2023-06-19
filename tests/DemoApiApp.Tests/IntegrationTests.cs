@@ -149,7 +149,7 @@ public class IntegrationTests
         catch (AiurUnexpectedServerResponseException e)
         {
             Assert.AreEqual("Known error", e.Message);
-            Assert.AreEqual(ErrorType.InsufficientPermissions, e.Response.Code);
+            Assert.AreEqual(Code.InsufficientPermissions, e.Response.Code);
         }
     }
     
@@ -165,7 +165,7 @@ public class IntegrationTests
         catch (AiurUnexpectedServerResponseException e)
         {
             Assert.AreEqual("The ReSharperTestRunner server crashed with an unknown error. Sorry about that.", e.Message);
-            Assert.AreEqual(ErrorType.UnknownError, e.Response.Code);
+            Assert.AreEqual(Code.UnknownError, e.Response.Code);
         }
     }
 }

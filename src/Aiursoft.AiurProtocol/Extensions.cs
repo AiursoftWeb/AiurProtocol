@@ -19,7 +19,7 @@ public static class Extensions
     /// <param name="services"></param>
     /// <param name="addHttpClient">If it should also add an HttpClient for you.</param>
     /// <returns></returns>
-    public static IServiceCollection AddAiurApiClient(
+    public static IServiceCollection AddAiurProtocolClient(
         this IServiceCollection services, 
         bool addHttpClient = true)
     {
@@ -32,34 +32,34 @@ public static class Extensions
         return services;
     }
     
-    public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, IOrderedQueryable<T> query, IPager pager)
+    public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, Code code, string errorMessage, IOrderedQueryable<T> query, IPager pager)
     {
-        return controller.Protocol(await AiurPagedCollectionBuilder.BuildAsync(query, pager, errorType, errorMessage));
+        return controller.Protocol(await AiurPagedCollectionBuilder.BuildAsync(query, pager, code, errorMessage));
     }
 
-    public static IActionResult Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, IReadOnlyCollection<T> items)
+    public static IActionResult Protocol<T>(this ControllerBase controller, Code code, string errorMessage, IReadOnlyCollection<T> items)
     {
         return controller.Protocol(new AiurCollection<T>(items)
         {
-            Code = errorType,
+            Code = code,
             Message = errorMessage
         });
     }
 
-    public static IActionResult Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, T value) where T : struct
+    public static IActionResult Protocol<T>(this ControllerBase controller, Code code, string errorMessage, T value) where T : struct
     {
         return controller.Protocol(new AiurValue<T>(value)
         {
-            Code = errorType,
+            Code = code,
             Message = errorMessage
         });
     }
 
-    public static IActionResult Protocol(this ControllerBase controller, ErrorType errorType, string errorMessage)
+    public static IActionResult Protocol(this ControllerBase controller, Code code, string errorMessage)
     {
         return controller.Protocol(new AiurResponse
         {
-            Code = errorType,
+            Code = code,
             Message = errorMessage
         });
     }

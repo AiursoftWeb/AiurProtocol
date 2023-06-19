@@ -9,7 +9,7 @@ namespace Aiursoft.AiurProtocol.Services
         public static async Task<AiurPagedCollection<T>> BuildAsync<T>(
             IOrderedQueryable<T> query,
             IPager pager,
-            ErrorType code,
+            Code code,
             string message)
         {
             List<T> items;
