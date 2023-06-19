@@ -54,7 +54,6 @@ After creating a new class library project, add the dependencies:
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
         <PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.0" />
     </ItemGroup>
