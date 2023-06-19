@@ -1,4 +1,6 @@
-﻿using Aiursoft.WebTools;
+﻿using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
+using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Tools;
 using DemoApiApp.Sdk;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -75,6 +77,18 @@ public class IntegrationTests
     }
     
     [TestMethod]
+    public async Task TestQueryPaged()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        var result = await sdk?.QuerySomethingPagedAsync(string.Empty, 5, 3)!;
+        var resultArray = result.Items?.ToArray();
+        Assert.AreEqual(5, resultArray?.Length);
+        Assert.AreEqual(89, resultArray?[0]);
+        Assert.AreEqual(144, resultArray?[1]);
+        Assert.AreEqual(233, resultArray?[2]);
+    }
+    
+    [TestMethod]
     public async Task TestGetANumber()
     {
         var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
@@ -99,11 +113,59 @@ public class IntegrationTests
     }
     
     [TestMethod]
+    public async Task TestRegisterInvalidForm()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.RegisterForm("12345678901", "Password@1234")!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurBadApiInputException e)
+        {
+            Assert.AreEqual("Multiple errors were found in the API input. (1 errors)", e.Message);
+            Assert.AreEqual(1, e.Reasons.Count);
+            Assert.AreEqual("The field Name must be a string or array type with a maximum length of '10'.", e.Reasons.Single());
+        }
+    }
+    
+    [TestMethod]
     public async Task TestRegisterJson()
     {
         var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
         var result = await sdk?.RegisterJson("anduin", "Password@1234")!;
         Assert.AreEqual("your-id-anduin", result.UserId);
     }
-
+    
+    [TestMethod]
+    public async Task TestCrashKnown()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.CrashKnownAsync()!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurUnexpectedServerResponseException e)
+        {
+            Assert.AreEqual("Known error", e.Message);
+            Assert.AreEqual(ErrorType.InsufficientPermissions, e.Response.Code);
+        }
+    }
+    
+    [TestMethod]
+    public async Task TestCrashUnknown()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.CrashUnknownAsync()!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurUnexpectedServerResponseException e)
+        {
+            Assert.AreEqual("The ReSharperTestRunner server crashed with an unknown error. Sorry about that.", e.Message);
+            Assert.AreEqual(ErrorType.UnknownError, e.Response.Code);
+        }
+    }
 }

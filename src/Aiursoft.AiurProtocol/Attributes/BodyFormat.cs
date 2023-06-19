@@ -1,7 +1,7 @@
 ﻿namespace Aiursoft.AiurProtocol.Attributes;
 
-public enum SendMode
+public enum BodyFormat
 {
-    HttpForm,
+    HttpFormBody,
     HttpJsonBody
 }

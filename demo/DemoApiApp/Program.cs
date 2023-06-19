@@ -1,5 +1,7 @@
+using System.IO.Compression;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.ResponseCompression;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -30,7 +32,6 @@ public class Startup
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
-
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services
             .AddControllers()

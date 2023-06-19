@@ -1,6 +1,6 @@
 ﻿using Aiursoft.AiurProtocol.Models;
 
-namespace DemoApiApp.Sdk.Models.ApiAddressModels;
+namespace DemoApiApp.Sdk.Models.ApiViewModels;
 
 public class RegisterViewModel : AiurResponse
 {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Aiursoft.AiurProtocol.Models;
+using Newtonsoft.Json;
 using JsonException = System.Text.Json.JsonException;
 
 namespace Aiursoft.AiurProtocol.Services;
@@ -10,7 +11,7 @@ public static class StringHelpers
         return source.Length <= count ? source : string.Concat(source.AsSpan(0, count - 3), "...");
     }
     
-    public static bool IsValidJson<T>(this string strInput, out T? result)
+    public static bool IsValidResponse(this string strInput, out AiurResponse? result)
     {
         result = default;
         if (string.IsNullOrWhiteSpace(strInput))
@@ -25,8 +26,8 @@ public static class StringHelpers
         {
             try
             {
-                result = JsonConvert.DeserializeObject<T>(strInput); // throw exception for illegal json format.
-                return true;
+                result = JsonConvert.DeserializeObject<AiurResponse>(strInput); // throw exception for illegal json format.
+                return result != null;
             }
             catch (JsonException)
             {

@@ -1,5 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
+﻿using System.IO.Compression;
+using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Exceptions;
@@ -7,6 +8,7 @@ using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Aiursoft.AiurProtocol.Services;
 
@@ -46,8 +48,8 @@ public class AiurApiClient : IScopedDependency
     }
 
     public async Task<T> Get<T>(
-        AiurApiEndpoint apiEndpoint, 
-        bool forceHttp = false, 
+        AiurApiEndpoint apiEndpoint,
+        bool forceHttp = false,
         bool autoRetry = true)
         where T : AiurResponse
     {
@@ -69,9 +71,9 @@ public class AiurApiClient : IScopedDependency
     }
 
     public async Task<T> Post<T>(
-        AiurApiEndpoint apiEndpoint, 
-        ApiPayload payload, 
-        SendMode mode = SendMode.HttpForm, 
+        AiurApiEndpoint apiEndpoint,
+        ApiPayload payload,
+        BodyFormat format = BodyFormat.HttpFormBody,
         bool forceHttp = false,
         bool autoRetry = true) where T : AiurResponse
     {
@@ -82,9 +84,9 @@ public class AiurApiClient : IScopedDependency
 
         var request = new HttpRequestMessage(HttpMethod.Post, apiEndpoint.ToString())
         {
-            Content = mode == SendMode.HttpForm ? 
-                new FormUrlEncodedContent(payload.Params) :
-                JsonContent.Create(payload.Param)
+            Content = format == BodyFormat.HttpFormBody
+                ? new FormUrlEncodedContent(payload.Params)
+                : new StringContent(JsonConvert.SerializeObject(payload.Param), Encoding.UTF8, "application/json")
         };
 
         request.Headers.Add("X-Forwarded-Proto", "https");
@@ -96,17 +98,27 @@ public class AiurApiClient : IScopedDependency
 
     private async Task<T> ProcessResponse<T>(HttpResponseMessage response) where T : AiurResponse
     {
-        var content = await response.Content.ReadAsStringAsync();
-        if (content.IsValidJson(out T? jsonObject))
+        var content = await GetResponseContent(response);
+        if (content.IsValidResponse(out AiurResponse? responseObject))
         {
-            if (jsonObject == null || jsonObject.Code != ErrorType.Success || !response.IsSuccessStatusCode)
+            if (responseObject?.Code == ErrorType.Success)
             {
-                throw new AiurServerException(jsonObject ??
-                                              throw new InvalidOperationException(
-                                                  "Failed to deserialize the AiurResponse."));
+                // Success.
+                var model = JsonConvert.DeserializeObject<T>(content)!;
+                return model;
             }
-
-            return jsonObject;
+            if (responseObject?.Code == ErrorType.InvalidInput)
+            {
+                // Invalid input.
+                var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content)!;
+                throw new AiurBadApiInputException(model);
+            }
+            else
+            {
+                // Other errors.
+                var model = JsonConvert.DeserializeObject<AiurResponse>(content)!;
+                throw new AiurUnexpectedServerResponseException(model);
+            }
         }
 
         if (response.IsSuccessStatusCode)
@@ -117,5 +129,23 @@ public class AiurApiClient : IScopedDependency
 
         throw new WebException(
             $"The remote server returned unexpected content: {content.SafeTakeFirst(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+    }
+    
+    private static async Task<string> GetResponseContent(HttpResponseMessage response)
+    {
+        var isGZipEncoded = response.Content.Headers.ContentEncoding.Contains("gzip");
+        if (isGZipEncoded)
+        {
+            await using var stream = await response.Content.ReadAsStreamAsync();
+            await using var decompressionStream = new GZipStream(stream, CompressionMode.Decompress);
+            using var reader = new StreamReader(decompressionStream);
+            var text = await reader.ReadToEndAsync();
+            return text;
+        }
+        else
+        {
+            var text = await response.Content.ReadAsStringAsync();
+            return text;
+        }
     }
 }

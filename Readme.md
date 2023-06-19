@@ -7,10 +7,9 @@
 
 AiurProtocol defines an API programming practice to easily build a RESTful API. It simplifies the process of 
 
-* Generating status code
-* Generating error message
-* Handling exceptions
-* Handling model validation
+* Auto HTTP status code translation
+* Auto error handling
+* Auto input model validation
 
 And will support the following features in the future:
 

@@ -8,14 +8,25 @@ namespace Aiursoft.AiurProtocol.Services
     {
         public static async Task<AiurPagedCollection<T>> BuildAsync<T>(
             IOrderedQueryable<T> query,
-            IPageable pager,
+            IPager pager,
             ErrorType code,
             string message)
         {
-            var items = await query.Page(pager).ToListAsync();
+            List<T> items;
+            int count = 0;
+            if (query is IAsyncEnumerable<T>)
+            {
+                items = await query.Page(pager).ToListAsync();
+                count = await query.CountAsync();
+            }
+            else
+            {
+                items = query.Page(pager).ToList();
+                count = query.Count();
+            }
             return new AiurPagedCollection<T>(items)
             {
-                TotalCount = await query.CountAsync(),
+                TotalCount = count,
                 CurrentPage = pager.PageNumber,
                 CurrentPageSize = pager.PageSize,
                 Code = code,
@@ -23,7 +34,7 @@ namespace Aiursoft.AiurProtocol.Services
             };
         }
 
-        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPageable pager)
+        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPager pager)
         {
             return query
                 .Skip((pager.PageNumber - 1) * pager.PageSize)

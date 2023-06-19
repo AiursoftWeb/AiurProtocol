@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol.Services;
+﻿using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Aiursoft.AiurProtocol.Attributes;
@@ -8,15 +9,14 @@ namespace Aiursoft.AiurProtocol.Attributes;
 ///     error messages.
 ///     Strongly suggest adding this attribute to all API controllers.
 /// </summary>
-public class APIModelStateChecker : ActionFilterAttribute
+public class ApiModelStateChecker : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         if (!context.ModelState.IsValid)
         {
-            var (result, code) = InvalidModelStateTranslator.GetInvalidModelStateErrorResponse(context.ModelState);
-            context.Result = result;
-            context.HttpContext.Response.StatusCode = (int)code;
+            var response = InvalidModelStateTranslator.GetInvalidModelStateErrorResponse(context.ModelState);
+            throw new AiurServerException(response);
         }
 
         base.OnActionExecuting(context);
