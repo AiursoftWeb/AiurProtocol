@@ -24,8 +24,8 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
             case AiurUnexpectedServerResponseException exp:
                 if (PassthroughRemoteErrors)
                 {
-                    context.ExceptionHandled = true;
-                    context.Result = context.HttpContext.Protocol(exp.Response);
+                    ProcessResult(context, exp.Response);
+                    return;
                 }
                 else
                 {
@@ -34,23 +34,30 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
                         Code = ErrorType.RemoteNotAccessible,
                         Message = $"The {projectName} server crashed with a remote API not accessible. Sorry about that."
                     };
-                    context.ExceptionHandled = true;
-                    context.Result = context.HttpContext.Protocol(maskedResponse);
+                    ProcessResult(context, maskedResponse);
+                    return;
                 }
-                break;
+            
+            // Known terminate the program.
             case AiurServerException exp:
-                context.ExceptionHandled = true;
-                context.Result = context.HttpContext.Protocol(exp.Response);
-                break;
+                ProcessResult(context, exp.Response);
+                return;
+            
+            // Unknown error.
             default:
                 var response = new AiurResponse
                 {
                     Code = ErrorType.UnknownError,
                     Message = $"The {projectName} server crashed with an unknown error. Sorry about that."
                 };
-                context.ExceptionHandled = true;
-                context.Result = context.HttpContext.Protocol(response);
-                break;
+                ProcessResult(context, response);
+                return;
         }
+    }
+
+    private void ProcessResult(ExceptionContext context, AiurResponse response)
+    {
+        context.ExceptionHandled = true;
+        context.Result = context.HttpContext.Protocol(response);
     }
 }

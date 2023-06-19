@@ -1,3 +1,4 @@
+using Aiursoft.AiurProtocol.Abstractions.Configuration;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.HttpOverrides;
 using Newtonsoft.Json;
@@ -25,11 +26,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-        {
-            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
+        JsonConvert.DefaultSettings = () => ProtocolConsts.JsonSettings;
         services
             .AddControllers()
             .AddNewtonsoftJson(options =>

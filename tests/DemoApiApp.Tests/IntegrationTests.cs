@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol.Exceptions;
+﻿using System.Net;
+using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.WebTools;
 using Aiursoft.XelNaga.Tools;
@@ -60,9 +61,9 @@ public class IntegrationTests
             _ = await sdk?.InvalidResponseShouldNotSuccessAsync()!;
             Assert.Fail("Bad test should not pass");
         }
-        catch (Exception e)
+        catch (WebException e)
         {
-            Assert.AreEqual("Required property 'code' not found in JSON. Path '', line 1, position 52.", e.Message);
+            Assert.AreEqual(@"The remote server returned unexpected error content: {""message"":""This is not a valid Protocol response.""}. code: BadRequest - Bad Request.", e.Message);
         }
     }
     

@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using System.Diagnostics.CodeAnalysis;
+using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Services;
@@ -10,11 +11,11 @@ namespace DemoApiApp.Sdk;
 
 public class DemoAccess
 {
-    private readonly AiurApiClient _http;
+    private readonly AiurProtocolClient _http;
     private readonly DemoServerConfig _observerLocator;
 
     public DemoAccess(
-        AiurApiClient http,
+        AiurProtocolClient http,
         IOptions<DemoServerConfig> observerLocator)
     {
         _http = http;
@@ -28,6 +29,7 @@ public class DemoAccess
         return result;
     }
 
+    [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> InvalidResponseShouldNotSuccessAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "/Home/InvalidResponseShouldNotSuccess", new { });
@@ -95,6 +97,7 @@ public class DemoAccess
         return result;
     }
 
+    [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> CrashKnownAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "CrashKnown", new { });
@@ -102,6 +105,7 @@ public class DemoAccess
         return result;
     }
 
+    [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> CrashUnknownAsync()
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "CrashUnknown", new { });

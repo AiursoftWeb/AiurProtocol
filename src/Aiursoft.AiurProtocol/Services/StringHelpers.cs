@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol.Models;
+﻿using Aiursoft.AiurProtocol.Abstractions.Configuration;
+using Aiursoft.AiurProtocol.Models;
 using Newtonsoft.Json;
 using JsonException = System.Text.Json.JsonException;
 
@@ -26,11 +27,13 @@ public static class StringHelpers
         {
             try
             {
-                result = JsonConvert.DeserializeObject<AiurResponse>(strInput); // throw exception for illegal json format.
+                // throw exception for illegal json format.
+                result = JsonConvert.DeserializeObject<AiurResponse>(strInput, ProtocolConsts.JsonSettings); 
                 return result != null;
             }
-            catch (JsonException)
+            catch
             {
+                // Suppress and return false.
             }
 
             return false;

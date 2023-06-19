@@ -1,6 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Net;
 using System.Text;
+using Aiursoft.AiurProtocol.Abstractions.Configuration;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
@@ -8,30 +9,23 @@ using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Aiursoft.AiurProtocol.Services;
 
-public class AiurApiClient : IScopedDependency
+public class AiurProtocolClient : IScopedDependency
 {
     private readonly HttpClient _client;
     private readonly RetryEngine _retryEngine;
-    private readonly ILogger<AiurApiClient> _logger;
-    private readonly JsonSerializerSettings _jsonSettings;
+    private readonly ILogger<AiurProtocolClient> _logger;
 
-    public AiurApiClient(
+    public AiurProtocolClient(
         RetryEngine retryEngine,
         IHttpClientFactory clientFactory,
-        ILogger<AiurApiClient> logger)
+        ILogger<AiurProtocolClient> logger)
     {
         _client = clientFactory.CreateClient();
         _retryEngine = retryEngine;
         _logger = logger;
-        _jsonSettings = new JsonSerializerSettings
-        {
-            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
     }
 
     private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
@@ -77,7 +71,7 @@ public class AiurApiClient : IScopedDependency
         {
             Content = format == BodyFormat.HttpFormBody
                 ? new FormUrlEncodedContent(payload.Params)
-                : new StringContent(JsonConvert.SerializeObject(payload.Param, _jsonSettings), Encoding.UTF8, "application/json")
+                : new StringContent(JsonConvert.SerializeObject(payload.Param, ProtocolConsts.JsonSettings), Encoding.UTF8, "application/json")
         };
 
         request.Headers.Add("accept", "application/json");
@@ -91,34 +85,37 @@ public class AiurApiClient : IScopedDependency
         var content = await GetResponseContent(response);
         if (content.IsValidResponse(out AiurResponse? responseObject))
         {
-            if (responseObject?.Code == ErrorType.Success)
+            switch (responseObject?.Code)
             {
-                // Success.
-                var model = JsonConvert.DeserializeObject<T>(content, _jsonSettings)!;
-                return model;
-            }
-            if (responseObject?.Code == ErrorType.InvalidInput)
-            {
-                // Invalid input.
-                var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content, _jsonSettings)!;
-                throw new AiurBadApiInputException(model);
-            }
-            else
-            {
-                // Other errors.
-                var model = JsonConvert.DeserializeObject<AiurResponse>(content, _jsonSettings)!;
-                throw new AiurUnexpectedServerResponseException(model);
+                case ErrorType.Success:
+                {
+                    // Success.
+                    var model = JsonConvert.DeserializeObject<T>(content, ProtocolConsts.JsonSettings)!;
+                    return model;
+                }
+                case ErrorType.InvalidInput:
+                {
+                    // Invalid input.
+                    var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content, ProtocolConsts.JsonSettings)!;
+                    throw new AiurBadApiInputException(model);
+                }
+                default:
+                {
+                    // Other errors.
+                    var model = JsonConvert.DeserializeObject<AiurResponse>(content, ProtocolConsts.JsonSettings)!;
+                    throw new AiurUnexpectedServerResponseException(model);
+                }
             }
         }
 
         if (response.IsSuccessStatusCode)
         {
             throw new InvalidOperationException(
-                $"The {nameof(AiurApiClient)} can only handle JSON content while the remote server returned unexpected content: {content.SafeTakeFirst(100)}.");
+                $"The {nameof(AiurProtocolClient)} can only handle AiurProtocol content while the remote server returned content: {content.SafeTakeFirst(100)}.");
         }
 
         throw new WebException(
-            $"The remote server returned unexpected content: {content.SafeTakeFirst(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+            $"The remote server returned unexpected error content: {content.SafeTakeFirst(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
     }
     
     private static async Task<string> GetResponseContent(HttpResponseMessage response)

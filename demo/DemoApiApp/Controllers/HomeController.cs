@@ -1,4 +1,5 @@
-﻿using Aiursoft.AiurProtocol;
+﻿using System.Diagnostics.CodeAnalysis;
+using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
@@ -19,7 +20,7 @@ public class HomeController : ControllerBase
 
     public IActionResult InvalidResponseShouldNotSuccess()
     {
-        return Ok(new { message = "This is not a valid Protocol response." });
+        return BadRequest(new { message = "This is not a valid Protocol response." });
     }
 
     public IActionResult GetANumber()
@@ -81,6 +82,7 @@ public class HomeController : ControllerBase
         throw new AiurServerException(ErrorType.InsufficientPermissions, "Known error");
     }
 
+    [ExcludeFromCodeCoverage]
     public IActionResult CrashUnknown()
     {
         var one = 1;

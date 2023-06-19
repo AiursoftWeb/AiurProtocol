@@ -15,7 +15,7 @@ public static class Extensions
     {
         services.AddTaskCanon();
         services.AddHttpClient();
-        services.AddScoped<AiurApiClient>();
+        services.AddScoped<AiurProtocolClient>();
         return services;
     }
     
