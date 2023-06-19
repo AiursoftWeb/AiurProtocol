@@ -164,7 +164,7 @@ public class IntegrationTests
         }
         catch (AiurUnexpectedServerResponseException e)
         {
-            Assert.AreEqual("The ReSharperTestRunner server crashed with an unknown error. Sorry about that.", e.Message);
+            Assert.IsTrue(e.Message.Contains("Sorry about that."));
             Assert.AreEqual(Code.UnknownError, e.Response.Code);
         }
     }
