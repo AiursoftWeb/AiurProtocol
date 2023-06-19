@@ -4,14 +4,16 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aiursoft.AiurProtocol;
 
-public class AiurApiEndpoint
+public class ApiPayload
 {
-    public AiurApiEndpoint(string address)
-    {
-        Address = address;
-    }
+    public object? Param { get; set; }
+    public Dictionary<string, string> Params { get; } = new();
 
-    public AiurApiEndpoint(string address, object param) : this(address)
+    public ApiPayload()
+    {
+    }
+    
+    public ApiPayload(object param)
     {
         Param = param;
         var t = param.GetType();
@@ -44,6 +46,21 @@ public class AiurApiEndpoint
             }
         }
     }
+}
+
+public class AiurApiEndpoint : ApiPayload
+{
+    public string Address { get; set; }
+
+    public AiurApiEndpoint(string address)
+    {
+        Address = address;
+    }
+
+    public AiurApiEndpoint(string address, object param) : base(param)
+    {
+        Address = address;
+    }
 
     public AiurApiEndpoint(string host, string path, object param) : this(host + path, param)
     {
@@ -53,10 +70,6 @@ public class AiurApiEndpoint
         $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param)
     {
     }
-
-    public object? Param { get; set; }
-    public string Address { get; set; }
-    public Dictionary<string, string> Params { get; } = new();
 
     public override string ToString()
     {

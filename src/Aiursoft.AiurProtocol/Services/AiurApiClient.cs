@@ -68,10 +68,9 @@ public class AiurApiClient : IScopedDependency
         return await ProcessResponse<T>(response);
     }
 
-    // TODO: Do NOT use the AiurApiEndpoint as post content.
     public async Task<T> Post<T>(
         AiurApiEndpoint apiEndpoint, 
-        AiurApiEndpoint postDataStr, 
+        ApiPayload payload, 
         SendMode mode = SendMode.HttpForm, 
         bool forceHttp = false,
         bool autoRetry = true) where T : AiurResponse
@@ -84,8 +83,8 @@ public class AiurApiClient : IScopedDependency
         var request = new HttpRequestMessage(HttpMethod.Post, apiEndpoint.ToString())
         {
             Content = mode == SendMode.HttpForm ? 
-                new FormUrlEncodedContent(postDataStr.Params) :
-                JsonContent.Create(postDataStr.Param)
+                new FormUrlEncodedContent(payload.Params) :
+                JsonContent.Create(payload.Param)
         };
 
         request.Headers.Add("X-Forwarded-Proto", "https");

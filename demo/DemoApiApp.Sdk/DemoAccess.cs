@@ -22,14 +22,14 @@ public class DemoAccess
 
     public async Task<AiurResponse> IndexAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "Index", new { });
+        var url = new AiurApiEndpoint(_observerLocator.Instance);
         var result = await _http.Get<AiurResponse>(url, true);
         return result;
     }
 
     public async Task<AiurResponse> InvalidResponseShouldNotSuccessAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "InvalidResponseShouldNotSuccess", new { });
+        var url = new AiurApiEndpoint(_observerLocator.Instance, "/Home/InvalidResponseShouldNotSuccess", new { });
         var result = await _http.Get<AiurResponse>(url, true);
         return result;
     }
@@ -61,7 +61,7 @@ public class DemoAccess
     public async Task<RegisterViewModel> RegisterForm(string username, string password)
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "RegisterForm", new { });
-        var form = new AiurApiEndpoint(string.Empty, new RegisterAddressModel()
+        var form = new ApiPayload(new RegisterAddressModel
         {
             Name = username,
             Password = password
@@ -73,7 +73,7 @@ public class DemoAccess
     public async Task<RegisterViewModel> RegisterJson(string username, string password)
     {
         var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "RegisterJson", new { });
-        var form = new AiurApiEndpoint(string.Empty, new RegisterAddressModel()
+        var form = new ApiPayload(new RegisterAddressModel()
         {
             Name = username,
             Password = password
