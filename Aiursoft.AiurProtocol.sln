@@ -3,12 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A9991564-F6E7-4747-92CE-15AEBDCDCC68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.AiurProtocol", "src\Aiursoft.AiurProtocol\Aiursoft.AiurProtocol.csproj", "{D843EE02-19F9-44D4-9804-B70895E64A77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.AiurProtocol.Abstractions", "src\Aiursoft.AiurProtocol.Abstractions\Aiursoft.AiurProtocol.Abstractions.csproj", "{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "abstractions", "abstractions", "{A211A03A-4F83-417F-AC72-76B7716F6760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D843EE02-19F9-44D4-9804-B70895E64A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D843EE02-19F9-44D4-9804-B70895E64A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D843EE02-19F9-44D4-9804-B70895E64A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D843EE02-19F9-44D4-9804-B70895E64A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D843EE02-19F9-44D4-9804-B70895E64A77} = {A9991564-F6E7-4747-92CE-15AEBDCDCC68}
+		{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC} = {A211A03A-4F83-417F-AC72-76B7716F6760}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29F419B7-7BD4-495D-89CE-923649735457}
 	EndGlobalSection
 EndGlobal
