@@ -2,6 +2,7 @@
 using Aiursoft.AiurProtocol.Interfaces;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Services;
+using Aiursoft.Canon;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,14 @@ namespace Aiursoft.AiurProtocol;
 
 public static class Extensions
 {
+    public static IServiceCollection AddAiurApiClient(this IServiceCollection services)
+    {
+        services.AddTaskCanon();
+        services.AddHttpClient();
+        services.AddScoped<AiurApiClient>();
+        return services;
+    }
+    
     public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, IOrderedQueryable<T> query, IPageable pager)
     {
         return controller.Protocol(await AiurPagedCollectionBuilder.BuildAsync(query, pager, errorType, errorMessage));
@@ -48,7 +57,7 @@ public static class Extensions
         var logger = controller.HttpContext.RequestServices.GetRequiredService<ILogger<AiurResponse>>();
 
         var logLevel = model.ConvertToLogLevel();
-        logger.Log(logLevel, 0, null, "An API generated response with error code: {CODE} and message: '{MESSAGE}'", model.Code, model.Message ?? string.Empty);
+        logger.Log(logLevel, 0, null, "An API generated response with error code: {Code} and message: '{Message}'", model.Code, model.Message ?? string.Empty);
 
         if (controller.HttpContext.Response.HasStarted)
         {

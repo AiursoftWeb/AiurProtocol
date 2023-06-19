@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Aiursoft.AiurProtocol.Models;
+﻿namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurCollection<T> : AiurResponse
 {

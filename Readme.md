@@ -22,6 +22,16 @@ And will support the following features in the future:
 * Api request log
 * Api request cache
 
+## How to Install
+
+## How to use on Server
+
+```csharp
+return this.Protocol();
+
+throw new AiurApiModelException();
+```
+
 ## How to contribute
 
 There are many ways to contribute to the project: logging bugs, submitting pull requests, reporting issues, and creating suggestions.

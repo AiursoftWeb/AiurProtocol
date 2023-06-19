@@ -10,19 +10,19 @@ namespace Aiursoft.AiurProtocol.Attributes;
 ///     Adding this will handle `AiurAPIModelException` and return the result as JSON directly.
 ///     Adding this will handle `AiurUnexpectedResponse` and return the result as JSON directly.
 /// </summary>
-public class APIRemoteExceptionAiurProtocol : ExceptionFilterAttribute
+public class ApiRemoteExceptionAiurProtocol : ExceptionFilterAttribute
 {
     public override void OnException(ExceptionContext context)
     {
         base.OnException(context);
         switch (context.Exception)
         {
-            case AiurUnexpectedResponse exp:
+            case AiurUnexpectedServerResponseException exp:
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = (int)exp.Response.ConvertToHttpStatusCode();
                 context.Result = new JsonResult(new AiurResponse { Code = exp.Code, Message = exp.Message });
                 break;
-            case AiurAPIModelException exp:
+            case AiurServerException exp:
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode =
                     (int)new AiurResponse { Code = exp.Code }.ConvertToHttpStatusCode();

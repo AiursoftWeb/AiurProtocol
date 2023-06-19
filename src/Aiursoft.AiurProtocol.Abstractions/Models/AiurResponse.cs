@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace Aiursoft.AiurProtocol.Models;
+﻿namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurResponse
 {

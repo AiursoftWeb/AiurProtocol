@@ -1,5 +1,4 @@
-﻿using System;
-using Aiursoft.AiurProtocol.Models;
+﻿using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.AiurProtocol.Exceptions;
 
@@ -7,13 +6,13 @@ namespace Aiursoft.AiurProtocol.Exceptions;
 ///     Throw this exception if the json respond by the Aiursoft Server was not with code = 0.
 ///     Catch it in your own code or just use `AiurExpAiurProtocol`.
 /// </summary>
-public class AiurUnexpectedResponse : Exception
+public class AiurUnexpectedServerResponseException : Exception
 {
-    public AiurUnexpectedResponse(Models.AiurResponse response) : base(response.Message)
+    public AiurUnexpectedServerResponseException(AiurResponse response) : base(response.Message)
     {
         Response = response;
     }
 
-    public Models.AiurResponse Response { get; set; }
+    public AiurResponse Response { get; set; }
     public ErrorType Code => Response.Code;
 }
