@@ -12,19 +12,19 @@ namespace DemoApiApp.Sdk;
 public class DemoAccess
 {
     private readonly AiurProtocolClient _http;
-    private readonly DemoServerConfig _observerLocator;
+    private readonly DemoServerConfig _demoServerLocator;
 
     public DemoAccess(
         AiurProtocolClient http,
-        IOptions<DemoServerConfig> observerLocator)
+        IOptions<DemoServerConfig> demoServerLocator)
     {
         _http = http;
-        _observerLocator = observerLocator.Value;
+        _demoServerLocator = demoServerLocator.Value;
     }
 
     public async Task<AiurResponse> IndexAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance);
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance);
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
@@ -32,21 +32,21 @@ public class DemoAccess
     [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> InvalidResponseShouldNotSuccessAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "/Home/InvalidResponseShouldNotSuccess", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "/Home/InvalidResponseShouldNotSuccess", new { });
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
 
     public async Task<AiurValue<int>> GetANumberAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "GetANumber", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "GetANumber", new { });
         var result = await _http.Get<AiurValue<int>>(url);
         return result;
     }
 
     public async Task<AiurCollection<int>> QuerySomethingAsync(string question)
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "QuerySomething", new
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "QuerySomething", new
         {
             question
         });
@@ -56,7 +56,7 @@ public class DemoAccess
     
     public async Task<AiurPagedCollection<int>> QuerySomethingPagedAsync(string question, int pageSize, int pageNumber)
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "QuerySomethingPaged", new QueryNumberAddressModel
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "QuerySomethingPaged", new QueryNumberAddressModel
         {
             Question = question,
             PageSize = pageSize,
@@ -68,14 +68,14 @@ public class DemoAccess
 
     public async Task<AiurCollection<int>> GetFibonacciFirst10Async()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "GetFibonacciFirst10", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "GetFibonacciFirst10", new { });
         var result = await _http.Get<AiurCollection<int>>(url);
         return result;
     }
 
     public async Task<RegisterViewModel> RegisterForm(string username, string password)
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "RegisterForm", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterForm", new { });
         var form = new ApiPayload(new RegisterAddressModel
         {
             Name = username,
@@ -87,7 +87,7 @@ public class DemoAccess
 
     public async Task<RegisterViewModel> RegisterJson(string username, string password)
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "RegisterJson", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterJson", new { });
         var form = new ApiPayload(new RegisterAddressModel()
         {
             Name = username,
@@ -100,7 +100,7 @@ public class DemoAccess
     [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> CrashKnownAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "CrashKnown", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "CrashKnown", new { });
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
@@ -108,7 +108,7 @@ public class DemoAccess
     [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> CrashUnknownAsync()
     {
-        var url = new AiurApiEndpoint(_observerLocator.Instance, "Home", "CrashUnknown", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "CrashUnknown", new { });
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }

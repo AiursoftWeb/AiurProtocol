@@ -27,7 +27,6 @@ public class IntegrationTests
     {
         _server = Extends.App<Startup>(port: _port);
         await _server.StartAsync();
-
         
         var services = new ServiceCollection();
         services.AddDemoService(_endpointUrl);

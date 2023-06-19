@@ -11,10 +11,23 @@ namespace Aiursoft.AiurProtocol;
 
 public static class Extensions
 {
-    public static IServiceCollection AddAiurApiClient(this IServiceCollection services)
+    /// <summary>
+    /// Add AiurProtocol Api Client to your SDK so your wrapper can use it to call your real APIs.
+    ///
+    ///  (If your project is using Aiursoft.Scanner, you do NOT have to call this!)
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="addHttpClient">If it should also add an HttpClient for you.</param>
+    /// <returns></returns>
+    public static IServiceCollection AddAiurApiClient(
+        this IServiceCollection services, 
+        bool addHttpClient = true)
     {
+        if (addHttpClient)
+        {
+            services.AddHttpClient();
+        }
         services.AddTaskCanon();
-        services.AddHttpClient();
         services.AddScoped<AiurProtocolClient>();
         return services;
     }
