@@ -1,7 +1,6 @@
 ﻿using Aiursoft.AiurProtocol.Abstractions.Configuration;
 using Aiursoft.AiurProtocol.Models;
 using Newtonsoft.Json;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Aiursoft.AiurProtocol.Services;
 

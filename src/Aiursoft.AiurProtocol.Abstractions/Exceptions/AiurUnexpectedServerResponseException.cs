@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using Aiursoft.AiurProtocol.Models;
 
 namespace Aiursoft.AiurProtocol.Exceptions;
