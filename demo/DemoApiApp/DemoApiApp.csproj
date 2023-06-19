@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol\Aiursoft.AiurProtocol.csproj" />
+    
     <ProjectReference Include="..\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
   </ItemGroup>
 
