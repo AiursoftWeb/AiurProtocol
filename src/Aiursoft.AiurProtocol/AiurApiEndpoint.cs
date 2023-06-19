@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aiursoft.AiurProtocol;
 
-public class AiurUrl
+public class AiurApiEndpoint
 {
-    public AiurUrl(string address)
+    public AiurApiEndpoint(string address)
     {
         Address = address;
     }
 
-    public AiurUrl(string address, object param) : this(address)
+    public AiurApiEndpoint(string address, object param) : this(address)
     {
+        Param = param;
         var t = param.GetType();
         foreach (var prop in t.GetProperties())
         {
@@ -44,15 +45,16 @@ public class AiurUrl
         }
     }
 
-    public AiurUrl(string host, string path, object param) : this(host + path, param)
+    public AiurApiEndpoint(string host, string path, object param) : this(host + path, param)
     {
     }
 
-    public AiurUrl(string host, string controllerName, string actionName, object param) : this(host,
+    public AiurApiEndpoint(string host, string controllerName, string actionName, object param) : this(host,
         $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param)
     {
     }
 
+    public object? Param { get; set; }
     public string Address { get; set; }
     public Dictionary<string, string> Params { get; } = new();
 

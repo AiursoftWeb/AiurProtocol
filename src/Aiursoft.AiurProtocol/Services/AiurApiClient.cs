@@ -1,5 +1,9 @@
 ﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text.RegularExpressions;
+using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstract;
 using Microsoft.Extensions.Logging;
@@ -41,14 +45,15 @@ public class AiurApiClient : IScopedDependency
             onError: e => { _logger.LogWarning(e, "Transient issue (retry available) happened with remote server"); });
     }
 
-    public async Task<string> Get(AiurUrl url, bool forceHttp = false, bool autoRetry = true)
+    public async Task<T> Get<T>(AiurApiEndpoint apiEndpoint, bool forceHttp = false, bool autoRetry = true)
+        where T : AiurResponse
     {
-        if (forceHttp && !url.IsLocalhost())
+        if (forceHttp && !apiEndpoint.IsLocalhost())
         {
-            url.Address = _regex.Replace(url.Address, "http://");
+            apiEndpoint.Address = _regex.Replace(apiEndpoint.Address, "http://");
         }
 
-        var request = new HttpRequestMessage(HttpMethod.Get, url.ToString())
+        var request = new HttpRequestMessage(HttpMethod.Get, apiEndpoint.ToString())
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };
@@ -57,78 +62,49 @@ public class AiurApiClient : IScopedDependency
         request.Headers.Add("accept", "application/json, text/html");
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
-        var content = await response.Content.ReadAsStringAsync();
-        if (content.IsValidJson())
-        {
-            return content;
-        }
-
-        if (response.IsSuccessStatusCode)
-        {
-            throw new InvalidOperationException(
-                $"The {nameof(AiurApiClient)} can only handle JSON content while the remote server returned unexpected content: {content.SafeTakeFirst(100)}.");
-        }
-
-        throw new WebException(
-            $"The remote server returned unexpected content: {content.SafeTakeFirst(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+        return await ProcessResponse<T>(response);
     }
 
-    public async Task<string> Post(AiurUrl url, AiurUrl postDataStr, bool forceHttp = false, bool autoRetry = true)
+    // TODO: Do NOT sue the AiurApiEndpoint as post content.
+    public async Task<T> Post<T>(
+        AiurApiEndpoint apiEndpoint, 
+        AiurApiEndpoint postDataStr, 
+        SendMode mode = SendMode.HttpForm, 
+        bool forceHttp = false,
+        bool autoRetry = true) where T : AiurResponse
     {
-        if (forceHttp && !url.IsLocalhost())
+        if (forceHttp && !apiEndpoint.IsLocalhost())
         {
-            url.Address = _regex.Replace(url.Address, "http://");
+            apiEndpoint.Address = _regex.Replace(apiEndpoint.Address, "http://");
         }
 
-        var request = new HttpRequestMessage(HttpMethod.Post, url.ToString())
+        var request = new HttpRequestMessage(HttpMethod.Post, apiEndpoint.ToString())
         {
-            Content = new FormUrlEncodedContent(postDataStr.Params)
+            Content = mode == SendMode.HttpForm ? 
+                new FormUrlEncodedContent(postDataStr.Params) :
+                JsonContent.Create(postDataStr.Param)
         };
 
         request.Headers.Add("X-Forwarded-Proto", "https");
         request.Headers.Add("accept", "application/json");
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
-        var content = await response.Content.ReadAsStringAsync();
-        if (content.IsValidJson())
-        {
-            return content;
-        }
-
-        if (response.IsSuccessStatusCode)
-        {
-            throw new InvalidOperationException(
-                $"The {nameof(AiurApiClient)} can only handle JSON content while the remote server returned unexpected content: {content.SafeTakeFirst(100)}.");
-        }
-
-        throw new WebException(
-            $"The remote server returned unexpected content: {content.SafeTakeFirst(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+        return await ProcessResponse<T>(response);
     }
 
-    public async Task<string> PostWithFile(AiurUrl url, Stream fileStream, bool forceHttp = false,
-        bool autoRetry = true)
+    private async Task<T> ProcessResponse<T>(HttpResponseMessage response) where T : AiurResponse
     {
-        if (forceHttp && !url.IsLocalhost())
+        var content = await response.Content.ReadAsStringAsync();
+        if (content.IsValidJson(out T? jsonObject))
         {
-            url.Address = _regex.Replace(url.Address, "http://");
-        }
-
-        var request = new HttpRequestMessage(HttpMethod.Post, url.Address)
-        {
-            Content = new MultipartFormDataContent
+            if (jsonObject == null || jsonObject.Code != ErrorType.Success || !response.IsSuccessStatusCode)
             {
-                { new StreamContent(fileStream), "file", "file" }
+                throw new AiurServerException(jsonObject ??
+                                              throw new InvalidOperationException(
+                                                  "Failed to deserialize the AiurResponse."));
             }
-        };
 
-        request.Headers.Add("X-Forwarded-Proto", "https");
-        request.Headers.Add("accept", "application/json");
-
-        using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
-        var content = await response.Content.ReadAsStringAsync();
-        if (content.IsValidJson())
-        {
-            return content;
+            return jsonObject;
         }
 
         if (response.IsSuccessStatusCode)

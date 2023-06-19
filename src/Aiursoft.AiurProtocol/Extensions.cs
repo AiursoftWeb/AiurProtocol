@@ -1,5 +1,4 @@
-﻿#pragma warning disable CS0618 // Type or member is obsolete
-using Aiursoft.AiurProtocol.Interfaces;
+﻿using Aiursoft.AiurProtocol.Interfaces;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.AiurProtocol.Services;
 using Aiursoft.Canon;
@@ -24,16 +23,16 @@ public static class Extensions
         return controller.Protocol(await AiurPagedCollectionBuilder.BuildAsync(query, pager, errorType, errorMessage));
     }
 
-    public static IActionResult Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, IReadOnlyCollection<T> value)
+    public static IActionResult Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, IReadOnlyCollection<T> items)
     {
-        return controller.Protocol(new AiurCollection<T>(value)
+        return controller.Protocol(new AiurCollection<T>(items)
         {
             Code = errorType,
             Message = errorMessage
         });
     }
 
-    public static IActionResult Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, T value)
+    public static IActionResult Protocol<T>(this ControllerBase controller, ErrorType errorType, string errorMessage, T value) where T : struct
     {
         return controller.Protocol(new AiurValue<T>(value)
         {
@@ -51,7 +50,6 @@ public static class Extensions
         });
     }
 
-    [Obsolete(error: false, message: "Please pass the error type and error message directly!")]
     public static IActionResult Protocol(this ControllerBase controller, AiurResponse model)
     {
         var logger = controller.HttpContext.RequestServices.GetRequiredService<ILogger<AiurResponse>>();
@@ -61,6 +59,7 @@ public static class Extensions
 
         if (controller.HttpContext.Response.HasStarted)
         {
+            logger.LogCritical("Failed to generate AiurProtocol response because the response was already started");
             return new EmptyResult();
         }
 
@@ -68,4 +67,3 @@ public static class Extensions
         return new JsonResult(model);
     }
 }
-#pragma warning restore CS0618 // Type or member is obsolete

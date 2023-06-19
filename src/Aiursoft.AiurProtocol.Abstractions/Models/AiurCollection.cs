@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.AiurProtocol.Models;
+﻿using Newtonsoft.Json;
+
+namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurCollection<T> : AiurResponse
 {
@@ -12,5 +14,6 @@ public class AiurCollection<T> : AiurResponse
         Items = items;
     }
 
+    [JsonProperty(Required = Required.Always)]
     public IReadOnlyCollection<T>? Items { get; set; }
 }

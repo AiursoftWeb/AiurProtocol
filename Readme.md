@@ -14,6 +14,7 @@ AiurProtocol defines an API programming practice to easily build a RESTful API. 
 
 And will support the following features in the future:
 
+* Client side format check
 * Api Localization
 * Api rate limit
 * Api version control

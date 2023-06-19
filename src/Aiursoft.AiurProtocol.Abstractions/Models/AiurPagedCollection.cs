@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.AiurProtocol.Models;
+﻿using Newtonsoft.Json;
+
+namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurPagedCollection<T> : AiurCollection<T>
 {
@@ -11,12 +13,15 @@ public class AiurPagedCollection<T> : AiurCollection<T>
     {
     }
 
+    [JsonProperty(Required = Required.Always)]
     public int TotalCount { get; set; }
 
     /// <summary>
     ///     Starts from 1.
     /// </summary>
+    [JsonProperty(Required = Required.Always)]
     public int CurrentPage { get; set; }
 
+    [JsonProperty(Required = Required.Always)]
     public int CurrentPageSize { get; set; }
 }

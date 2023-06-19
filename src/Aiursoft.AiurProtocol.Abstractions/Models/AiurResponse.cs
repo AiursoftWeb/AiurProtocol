@@ -1,7 +1,12 @@
-﻿namespace Aiursoft.AiurProtocol.Models;
+﻿using Newtonsoft.Json;
+
+namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurResponse
 {
-    public virtual ErrorType Code { get; set; }
-    public virtual string? Message { get; set; }
+    [JsonProperty(Required = Required.Always)]
+    public ErrorType Code { get; set; }
+    
+    [JsonProperty(Required = Required.Always)]
+    public string? Message { get; set; }
 }

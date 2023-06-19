@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.AiurProtocol.Models;
+﻿using Newtonsoft.Json;
+
+namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurValue<T> : AiurResponse
 {
@@ -7,5 +9,6 @@ public class AiurValue<T> : AiurResponse
         Value = value;
     }
 
+    [JsonProperty(Required = Required.Always)]
     public T? Value { get; set; }
 }
