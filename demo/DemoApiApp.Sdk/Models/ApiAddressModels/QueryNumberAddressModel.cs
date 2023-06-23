@@ -1,14 +1,9 @@
-﻿using Aiursoft.AiurProtocol.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using Aiursoft.AiurProtocol.Interfaces;
 
 namespace DemoApiApp.Sdk.Models.ApiAddressModels;
 
-public class QueryNumberAddressModel : IPager
+public class QueryNumberAddressModel : Pager
 {
     public string? Question { get; set; }
-    public int PageSize { get; set; }
-    
-    /// <summary>
-    /// Start with 1
-    /// </summary>
-    public int PageNumber { get; set; }
 }

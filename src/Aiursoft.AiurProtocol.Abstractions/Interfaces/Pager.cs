@@ -2,17 +2,19 @@
 
 namespace Aiursoft.AiurProtocol.Interfaces;
 
-public interface IPager
+public abstract class Pager
 {
     /// <summary>
-    ///     Default is 10
+    /// How many items should there include in one page. Max is 100.
     /// </summary>
     [Range(1, 100)]
+    [Required(ErrorMessage = "Please provide the page size!")]
     public int PageSize { get; set; }
 
     /// <summary>
-    ///     Starts from 1.
+    /// The page number of the grouped items. Starts with 1.
     /// </summary>
     [Range(1, int.MaxValue)]
+    [Required(ErrorMessage = "Please provide the page number!")]
     public int PageNumber { get; set; }
 }

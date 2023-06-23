@@ -21,18 +21,18 @@ public class IntegrationTests
         _port = Network.GetAvailablePort();
         _endpointUrl = $"http://localhost:{_port}";
     }
-    
+
     [TestInitialize]
     public async Task TestInitialize()
     {
         _server = Extends.App<Startup>(port: _port);
         await _server.StartAsync();
-        
+
         var services = new ServiceCollection();
         services.AddDemoService(_endpointUrl);
         _serviceProvider = services.BuildServiceProvider();
     }
-    
+
     [TestCleanup]
     public async Task CleanServer()
     {
@@ -50,7 +50,7 @@ public class IntegrationTests
         var result = await sdk?.IndexAsync()!;
         Assert.AreEqual("Welcome to this API project!", result.Message);
     }
-    
+
     [TestMethod]
     public async Task TestRedirect()
     {
@@ -60,7 +60,7 @@ public class IntegrationTests
         Assert.AreEqual(1, result[1]);
         Assert.AreEqual(21, result[2]);
     }
-    
+
     [TestMethod]
     public async Task TestInvalid()
     {
@@ -72,10 +72,12 @@ public class IntegrationTests
         }
         catch (WebException e)
         {
-            Assert.AreEqual(@"The remote server returned unexpected error content: {""message"":""This is not a valid Protocol response.""}. code: BadRequest - Bad Request.", e.Message);
+            Assert.AreEqual(
+                @"The remote server returned unexpected error content: {""message"":""This is not a valid Protocol response.""}. code: BadRequest - Bad Request.",
+                e.Message);
         }
     }
-    
+
     [TestMethod]
     public async Task TestQuery()
     {
@@ -85,7 +87,7 @@ public class IntegrationTests
         Assert.AreEqual(13, result?[1]);
         Assert.AreEqual(233, result?[2]);
     }
-    
+
     [TestMethod]
     public async Task TestQueryPaged()
     {
@@ -97,7 +99,25 @@ public class IntegrationTests
         Assert.AreEqual(144, resultArray?[1]);
         Assert.AreEqual(233, resultArray?[2]);
     }
-    
+
+    [TestMethod]
+    public async Task TestQueryPagedInvalidPageSize()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            var result = await sdk?.QuerySomethingPagedAsync(string.Empty, 101, 3)!;
+        }
+        catch (AiurBadApiInputException e)
+        {
+            Assert.AreEqual(
+                "The field PageSize must be between 1 and 100.", 
+                ((e.InnerException as AggregateException)!).InnerExceptions.Single().Message);
+            return;
+        }
+        Assert.Fail("Invalid request should not success!");
+    }
+
     [TestMethod]
     public async Task TestGetANumber()
     {
@@ -105,7 +125,7 @@ public class IntegrationTests
         var result = await sdk?.GetANumberAsync()!;
         Assert.AreEqual(123, result.Value);
     }
-    
+
     [TestMethod]
     public async Task TestGetACollection()
     {
@@ -113,7 +133,7 @@ public class IntegrationTests
         var result = await sdk?.GetFibonacciFirst10Async()!;
         Assert.AreEqual(10, result.Items?.Count);
     }
-    
+
     [TestMethod]
     public async Task TestRegisterForm()
     {
@@ -121,7 +141,7 @@ public class IntegrationTests
         var result = await sdk?.RegisterForm("anduin", "Password@1234")!;
         Assert.AreEqual("your-id-anduin", result.UserId);
     }
-    
+
     [TestMethod]
     public async Task TestRegisterInvalidForm()
     {
@@ -135,10 +155,11 @@ public class IntegrationTests
         {
             Assert.AreEqual("Multiple errors were found in the API input. (1 errors)", e.Message);
             Assert.AreEqual(1, e.Reasons.Count);
-            Assert.AreEqual("The field Name must be a string or array type with a maximum length of '10'.", e.Reasons.Single());
+            Assert.AreEqual("The field Name must be a string or array type with a maximum length of '10'.",
+                e.Reasons.Single());
         }
     }
-    
+
     [TestMethod]
     public async Task TestRegisterJson()
     {
@@ -146,7 +167,7 @@ public class IntegrationTests
         var result = await sdk?.RegisterJson("anduin", "Password@1234")!;
         Assert.AreEqual("your-id-anduin", result.UserId);
     }
-    
+
     [TestMethod]
     public async Task TestCrashKnown()
     {
@@ -162,7 +183,7 @@ public class IntegrationTests
             Assert.AreEqual(Code.Conflict, e.Response.Code);
         }
     }
-    
+
     [TestMethod]
     public async Task TestCrashUnknown()
     {

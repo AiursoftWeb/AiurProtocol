@@ -8,7 +8,7 @@ namespace Aiursoft.AiurProtocol.Services
     {
         public static async Task<AiurPagedCollection<T>> BuildAsync<T>(
             IOrderedQueryable<T> query,
-            IPager pager,
+            Pager pager,
             Code code,
             string message)
         {
@@ -34,7 +34,7 @@ namespace Aiursoft.AiurProtocol.Services
             };
         }
 
-        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, IPager pager)
+        public static IQueryable<T> Page<T>(this IOrderedQueryable<T> query, Pager pager)
         {
             return query
                 .Skip((pager.PageNumber - 1) * pager.PageSize)

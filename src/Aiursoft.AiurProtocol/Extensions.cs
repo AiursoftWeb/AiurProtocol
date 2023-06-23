@@ -34,7 +34,7 @@ public static class Extensions
         return services;
     }
     
-    public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, Code code, string errorMessage, IOrderedQueryable<T> query, IPager pager)
+    public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, Code code, string errorMessage, IOrderedQueryable<T> query, Pager pager)
     {
         return controller.Protocol(await AiurPagedCollectionBuilder.BuildAsync(query, pager, code, errorMessage));
     }
