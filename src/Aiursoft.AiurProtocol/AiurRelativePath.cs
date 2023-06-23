@@ -2,25 +2,22 @@
 
 namespace Aiursoft.AiurProtocol;
 
-public class AiurApiEndpoint : AiurApiPayload
+
+public class AiurRelativePath : AiurApiPayload
 {
     public string Address { get; set; }
 
-    public AiurApiEndpoint(string address)
+    public AiurRelativePath(string address)
     {
         Address = address;
     }
 
-    public AiurApiEndpoint(string address, object param) : base(param)
+    public AiurRelativePath(string address, object param) : base(param)
     {
         Address = address;
     }
 
-    public AiurApiEndpoint(string host, string path, object param) : this(host + path, param)
-    {
-    }
-
-    public AiurApiEndpoint(string host, string controllerName, string actionName, object param) : this(host,
+    public AiurRelativePath(string controllerName, string actionName, object param) : this(
         $"/{WebUtility.UrlEncode(controllerName)}/{WebUtility.UrlEncode(actionName)}", param)
     {
     }

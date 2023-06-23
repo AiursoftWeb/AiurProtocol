@@ -28,6 +28,13 @@ public class DemoAccess
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
+    
+    public async Task<AiurPagedCollection<int>> RedirectAsync()
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "Redirect", new { });
+        var result = await _http.Get<AiurPagedCollection<int>>(url);
+        return result;
+    }
 
     [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> InvalidResponseShouldNotSuccessAsync()
@@ -76,7 +83,7 @@ public class DemoAccess
     public async Task<RegisterViewModel> RegisterForm(string username, string password)
     {
         var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterForm", new { });
-        var form = new ApiPayload(new RegisterAddressModel
+        var form = new AiurApiPayload(new RegisterAddressModel
         {
             Name = username,
             Password = password
@@ -88,7 +95,7 @@ public class DemoAccess
     public async Task<RegisterViewModel> RegisterJson(string username, string password)
     {
         var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterJson", new { });
-        var form = new ApiPayload(new RegisterAddressModel()
+        var form = new AiurApiPayload(new RegisterAddressModel()
         {
             Name = username,
             Password = password

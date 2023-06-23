@@ -71,6 +71,11 @@ public static class Extensions
         return controller.HttpContext.Protocol(model);
     }
     
+    public static IActionResult Protocol(this ControllerBase controller, AiurRelativePath relativePath)
+    {
+        return controller.Redirect(relativePath.ToString());
+    }
+    
     public static IActionResult Protocol(this HttpContext context, AiurResponse model)
     {
         var logger = context.RequestServices.GetRequiredService<ILogger<AiurResponse>>();

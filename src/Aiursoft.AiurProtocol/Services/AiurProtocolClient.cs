@@ -46,11 +46,11 @@ public class AiurProtocolClient : IScopedDependency
     }
 
     public async Task<T> Get<T>(
-        AiurApiEndpoint apiEndpoint,
+        AiurApiEndpoint aiurApiEndpoint,
         bool autoRetry = true)
         where T : AiurResponse
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, apiEndpoint.ToString())
+        var request = new HttpRequestMessage(HttpMethod.Get, aiurApiEndpoint.ToString())
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };
@@ -62,12 +62,12 @@ public class AiurProtocolClient : IScopedDependency
     }
 
     public async Task<T> Post<T>(
-        AiurApiEndpoint apiEndpoint,
-        ApiPayload payload,
+        AiurApiEndpoint aiurApiEndpoint,
+        AiurApiPayload payload,
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true) where T : AiurResponse
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, apiEndpoint.ToString())
+        var request = new HttpRequestMessage(HttpMethod.Post, aiurApiEndpoint.ToString())
         {
             Content = format == BodyFormat.HttpFormBody
                 ? new FormUrlEncodedContent(payload.Params)

@@ -15,6 +15,16 @@ namespace DemoApiApp.Controllers;
 [ApiModelStateChecker]
 public class HomeController : ControllerBase
 {
+    public IActionResult Redirect()
+    {
+        return this.Protocol(new AiurRelativePath("Home", nameof(QuerySomethingPaged), new QueryNumberAddressModel
+        {
+            PageNumber = 1,
+            PageSize = 3,
+            Question = "1"
+        }));
+    }
+    
     public IActionResult Index()
     {
         return this.Protocol(Code.Success, "Welcome to this API project!");

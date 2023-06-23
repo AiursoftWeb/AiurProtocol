@@ -52,6 +52,16 @@ public class IntegrationTests
     }
     
     [TestMethod]
+    public async Task TestRedirect()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        var result = (await sdk?.RedirectAsync()!).Items!.ToArray();
+        Assert.AreEqual(1, result[0]);
+        Assert.AreEqual(1, result[1]);
+        Assert.AreEqual(21, result[2]);
+    }
+    
+    [TestMethod]
     public async Task TestInvalid()
     {
         try
