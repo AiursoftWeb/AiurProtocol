@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Aiursoft.AiurProtocol.Interfaces;
+﻿using Aiursoft.AiurProtocol.Interfaces;
 
 namespace DemoApiApp.Sdk.Models.ApiAddressModels;
 

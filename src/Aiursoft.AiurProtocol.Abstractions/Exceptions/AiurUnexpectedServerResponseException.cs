@@ -22,11 +22,10 @@ public class AiurBadApiInputException : AiurUnexpectedServerResponseException
 {
     public IReadOnlyCollection<string> Reasons { get; set; }
 
-    public AiurBadApiInputException(AiurResponse response)
+    public AiurBadApiInputException(AiurCollection<string> response)
         : base(response, new AggregateException("Multiple API input error.",
-            (response as AiurCollection<string>)
-            ?.Items?.Select(i => new InvalidOperationException(i)) 
-            ?? throw new WebException("Failed to parse remote API response.")))
+            response.Items?.Select(i => new InvalidOperationException(i)) 
+            ?? throw new WebException("Failed to parse API response.")))
     {
         if (response.Code != Code.InvalidInput)
         {
@@ -34,7 +33,6 @@ public class AiurBadApiInputException : AiurUnexpectedServerResponseException
                 $"The exception with type: '{nameof(AiurBadApiInputException)}' should not be thrown because the server returned result: {response.Code}.");
         }
         
-        Reasons = (response as AiurCollection<string>)?.Items
-                  ?? throw new WebException("Failed to parse remote API response.");
+        Reasons = response.Items ?? throw new WebException("Failed to parse remote API response.");
     }
 }

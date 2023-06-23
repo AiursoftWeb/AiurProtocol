@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IO.Compression;
 using System.Net;
 using System.Text;
 using Aiursoft.AiurProtocol.Abstractions.Configuration;
@@ -47,9 +48,15 @@ public class AiurProtocolClient : IScopedDependency
 
     public async Task<T> Get<T>(
         AiurApiEndpoint aiurApiEndpoint,
-        bool autoRetry = true)
+        bool autoRetry = true,
+        bool disableClientSideValidation = false)
         where T : AiurResponse
     {
+        if (!disableClientSideValidation)
+        {
+            ClientSideValidate(aiurApiEndpoint.Param);
+        }
+
         var request = new HttpRequestMessage(HttpMethod.Get, aiurApiEndpoint.ToString())
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
@@ -65,8 +72,15 @@ public class AiurProtocolClient : IScopedDependency
         AiurApiEndpoint aiurApiEndpoint,
         AiurApiPayload payload,
         BodyFormat format = BodyFormat.HttpFormBody,
-        bool autoRetry = true) where T : AiurResponse
+        bool autoRetry = true,
+        bool disableClientSideValidation = false) where T : AiurResponse
     {
+        if (!disableClientSideValidation)
+        {
+            ClientSideValidate(aiurApiEndpoint.Param);
+            ClientSideValidate(payload.Param);
+        }
+
         var request = new HttpRequestMessage(HttpMethod.Post, aiurApiEndpoint.ToString())
         {
             Content = format == BodyFormat.HttpFormBody
@@ -78,6 +92,30 @@ public class AiurProtocolClient : IScopedDependency
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
         return await ProcessResponse<T>(response);
+    }
+    
+    private static void ClientSideValidate(object? input)
+    {
+        if (input == null)
+        {
+            return;
+        }
+        
+        var context = new ValidationContext(input);
+        var results = new List<ValidationResult>();
+
+        if (!Validator.TryValidateObject(input, context, results, true))
+        {
+            var errors = results.Select(t => t.ErrorMessage ?? string.Empty).ToList();
+            if (errors.Any())
+            {
+                throw new AiurBadApiInputException(new AiurCollection<string>(errors)
+                {
+                    Code = Code.InvalidInput,
+                    Message = "Could NOT pass client side model validation! (Request not sent to server)"
+                });
+            }
+        }
     }
 
     private async Task<T> ProcessResponse<T>(HttpResponseMessage response) where T : AiurResponse

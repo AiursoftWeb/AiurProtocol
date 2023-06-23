@@ -80,7 +80,9 @@ public class DemoAccess
         return result;
     }
 
-    public async Task<RegisterViewModel> RegisterForm(string username, string password)
+    public async Task<RegisterViewModel> RegisterForm(
+        string username, 
+        string password)
     {
         var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterForm", new { });
         var form = new AiurApiPayload(new RegisterAddressModel
@@ -88,7 +90,7 @@ public class DemoAccess
             Name = username,
             Password = password
         });
-        var result = await _http.Post<RegisterViewModel>(url, form);
+        var result = await _http.Post<RegisterViewModel>(url, form, disableClientSideValidation: true);
         return result;
     }
 

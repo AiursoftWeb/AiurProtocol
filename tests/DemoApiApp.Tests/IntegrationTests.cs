@@ -106,13 +106,13 @@ public class IntegrationTests
         try
         {
             var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
-            var result = await sdk?.QuerySomethingPagedAsync(string.Empty, 101, 3)!;
+            _ = await sdk?.QuerySomethingPagedAsync(string.Empty, 101, 3)!;
         }
         catch (AiurBadApiInputException e)
         {
             Assert.AreEqual(
                 "The field PageSize must be between 1 and 100.", 
-                ((e.InnerException as AggregateException)!).InnerExceptions.Single().Message);
+                (e.InnerException as AggregateException)!.InnerExceptions.Single().Message);
             return;
         }
         Assert.Fail("Invalid request should not success!");

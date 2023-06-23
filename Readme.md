@@ -10,6 +10,7 @@ AiurProtocol defines an API programming practice to easily build a RESTful API. 
 * Auto HTTP status code translation
 * Auto error handling
 * Auto input model validation
+* Client side API validation
 
 ## Why this project?
 
@@ -135,7 +136,6 @@ That's it! It will use your SDK to generate a new call to your server, and the r
 
 It will support the following features in the future:
 
-* Client side valid check
 * Api rate limit
 * Api version control
 * Api documentation
