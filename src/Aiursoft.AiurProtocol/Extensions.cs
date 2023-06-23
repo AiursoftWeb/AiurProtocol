@@ -17,17 +17,19 @@ public static class Extensions
     ///  (If your project is using Aiursoft.Scanner, you do NOT have to call this!)
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="addHttpClient">If it should also add an HttpClient for you.</param>
+    /// <param name="addHttpClient">If it should also add an HttpClient to services.</param>
+    /// <param name="addMemoryCache">If it should also add an MemoryCache to services.</param>
     /// <returns></returns>
     public static IServiceCollection AddAiurProtocolClient(
         this IServiceCollection services, 
-        bool addHttpClient = true)
+        bool addHttpClient = true,
+        bool addMemoryCache = true)
     {
         if (addHttpClient)
         {
             services.AddHttpClient();
         }
-        services.AddTaskCanon();
+        services.AddTaskCanon(addMemoryCache: addMemoryCache);
         services.AddScoped<AiurProtocolClient>();
         return services;
     }

@@ -149,7 +149,7 @@ public class IntegrationTests
         catch (AiurUnexpectedServerResponseException e)
         {
             Assert.AreEqual("Known error", e.Message);
-            Assert.AreEqual(Code.InsufficientPermissions, e.Response.Code);
+            Assert.AreEqual(Code.Conflict, e.Response.Code);
         }
     }
     

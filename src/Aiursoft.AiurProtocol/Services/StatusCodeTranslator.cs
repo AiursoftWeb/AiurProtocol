@@ -12,8 +12,8 @@ internal static class StatusCodeTranslator
         {
             Code.Success => HttpStatusCode.OK,
             Code.WrongKey => HttpStatusCode.Unauthorized,
-            Code.InsufficientPermissions => HttpStatusCode.Forbidden,
-            Code.Gone => HttpStatusCode.Gone,
+            Code.PlaceHolder2 => HttpStatusCode.Gone,
+            Code.PlaceHolder3 => HttpStatusCode.Gone,
             Code.NotFound => HttpStatusCode.NotFound,
             Code.UnknownError => HttpStatusCode.InternalServerError,
             Code.RemoteNotAccessible => HttpStatusCode.InternalServerError,
@@ -32,8 +32,8 @@ internal static class StatusCodeTranslator
         {
             Code.Success => LogLevel.Information,
             Code.WrongKey => LogLevel.Warning,
-            Code.InsufficientPermissions => LogLevel.Warning,
-            Code.Gone => LogLevel.Warning,
+            Code.PlaceHolder2 => LogLevel.Warning,
+            Code.PlaceHolder3 => LogLevel.Warning,
             Code.NotFound => LogLevel.Warning,
             Code.UnknownError => LogLevel.Error,
             Code.RemoteNotAccessible => LogLevel.Error,

@@ -87,7 +87,7 @@ public class AiurProtocolClient : IScopedDependency
         {
             switch (responseObject?.Code)
             {
-                case Code.Success:
+                case Code.Success or Code.NoActionNeeded:
                 {
                     // Success.
                     var model = JsonConvert.DeserializeObject<T>(content, ProtocolConsts.JsonSettings)!;

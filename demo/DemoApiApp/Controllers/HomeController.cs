@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoApiApp.Controllers;
 
-[ApiExceptionHandler(PassthroughRemoteErrors = true)]
+[ApiExceptionHandler(
+    PassthroughRemoteErrors = true, 
+    PassthroughAiurServerException = true)]
 [ApiModelStateChecker]
 public class HomeController : ControllerBase
 {
@@ -25,7 +27,7 @@ public class HomeController : ControllerBase
 
     public IActionResult GetANumber()
     {
-        return this.Protocol(Code.Success, "Got your value!", value: 123);
+        return this.Protocol(Code.NoActionNeeded, "Got your value!", value: 123);
     }
 
     public IActionResult QuerySomething([FromQuery] string question)
@@ -79,7 +81,7 @@ public class HomeController : ControllerBase
 
     public IActionResult CrashKnown()
     {
-        throw new AiurServerException(Code.InsufficientPermissions, "Known error");
+        throw new AiurServerException(Code.Conflict, "Known error");
     }
 
     [ExcludeFromCodeCoverage]

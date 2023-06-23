@@ -12,6 +12,8 @@ namespace Aiursoft.AiurProtocol.Attributes;
 public class ApiExceptionHandler : ExceptionFilterAttribute
 {
     public bool PassthroughRemoteErrors { get; set; } = true;
+
+    public bool PassthroughAiurServerException { get; set; } = true;
     
     public override void OnException(ExceptionContext context)
     {
@@ -38,10 +40,23 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
                     return;
                 }
             
-            // Known terminate the program.
+            // Known server exception. Terminate the program.
             case AiurServerException exp:
-                ProcessResult(context, exp.Response);
-                return;
+                if (PassthroughAiurServerException)
+                {
+                    ProcessResult(context, exp.Response);
+                    return;
+                }
+                else
+                {
+                    var maskedResponse = new AiurResponse
+                    {
+                        Code = Code.RemoteNotAccessible,
+                        Message = $"The {projectName} server had an inside conflict that it couldn't process your request."
+                    };
+                    ProcessResult(context, maskedResponse);
+                    return;
+                }
             
             // Unknown error.
             default:
