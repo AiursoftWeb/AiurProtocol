@@ -7,7 +7,7 @@ using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
-using Aiursoft.Scanner.Abstract;
+using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
