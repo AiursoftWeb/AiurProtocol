@@ -134,7 +134,7 @@ public class AiurProtocolClient : IScopedDependency
             if (enforceSameVersion)
             {
                 var sdkVersion = Assembly.GetExecutingAssembly()?.GetName()?.Version ?? new Version();
-                if (sdkVersion != responseObject!.ProtocolVersion)
+                if (sdkVersion != responseObject.ProtocolVersion)
                 {
                     throw new AiurBadApiVersionException(sdkVersion, responseObject);
                 }
