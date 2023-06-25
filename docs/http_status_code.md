@@ -7,7 +7,12 @@ You can check the source code here: [src\Aiursoft.AiurProtocol\Services\StatusCo
 ```csharp
 return response.Code switch
 {
-    Code.Success => HttpStatusCode.OK,
+    // Success
+    Code.JobDone => HttpStatusCode.Created,
+    Code.NoActionTaken => HttpStatusCode.Accepted,
+    Code.ResultShown => HttpStatusCode.OK,
+
+    // Failed
     Code.WrongKey => HttpStatusCode.Unauthorized,
     Code.PlaceHolder2 => HttpStatusCode.Gone,
     Code.PlaceHolder3 => HttpStatusCode.Gone,
@@ -23,16 +28,19 @@ return response.Code switch
 };
 ```
 
-| Code        | Description    |  solution  |
-|--|--|--|
-|0 | Request completed successfully | No correction required
-|-1 | Wrong key. | Check whether a legal key is passed
-|-2 | Request pending | An operation with the same meaning is already in progress. Please try again later.
-|-3 | Cautions | The operation has been completed, but still needs attention. Read the value of the message parameter
-|-4 | Not found | The target object of the operation does not exist. Please confirm that the target exists
-|-5 | Server crash | Server unknown error. Please submit feedback to the server team
-|-6 | Has been executed | An operation with the same meaning has been executed. No further resolution is needed.
-|-7 | There are not enough resources | The available resources cannot meet the operation requirements. Please check the rationality of the request.
-|-8 | Unauthorized | The user cannot pass the authentication or does not have the permission to perform the operation. Make sure that the user's permissions are normal.
-|-10 | The input value type is invalid | The parameter is missing, or the parameter passed in does not conform to the specification. Check the parameters.
-|-11 | Timeout | The request has been waiting for a long time in processing and cannot be responded. Please submit feedback to the server team.
+| Code | Http Status Code | Explanation | Solution |
+|------|------------------|-------------|----------|
+|JobDone|Created|The job was finished.|N/A|
+|NoActionTaken|Accepted|The job seems require no action to be taken|Check the job context.|
+|ResultShown|OK|The result you are looking for was found and shown.|N/A|
+|WrongKey|Unauthorized|The key was wrong.|Check your key.|
+|PlaceHolder2|Gone|A place holder for further usage.|N/A|
+|PlaceHolder3|Gone|A place holder for further usage.|N/A|
+|NotFound|NotFound|The item you are looking for was not found.|Check your input object id.|
+|UnknownError|InternalServerError|The server encountered an unknown error.|Check the server log.|
+|RemoteNotAccessible|InternalServerError|A remote resource was not accessible.|Check the server log.|
+|Conflict|Conflict|The item you are trying to create was already exists.|Check your input object id.|
+|Unauthorized|Unauthorized|You are not authorized to do this action.|Check your permission.|
+|Timeout|RequestTimeout|The server was timeout.|Contact the server owner.|
+|InvalidInput|BadRequest|The input was invalid.|Check your input.|
+|TooManyRequests|TooManyRequests|You have sent too many requests to the server.|Wait for a while.|

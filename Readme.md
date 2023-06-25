@@ -5,12 +5,15 @@
 [![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/badges/master/coverage.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/pipelines)
 [![NuGet version (Aiursoft.AiurProtocol)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol/)
 
-AiurProtocol defines an API programming practice to easily build a RESTful API. It simplifies the process of 
+AiurProtocol defines an API programming practice to easily build a RESTful API. It simplifies the process of
 
 * Auto HTTP status code translation
 * Auto error handling
 * Auto input model validation
-* Client side API validation
+* Auto JSON\HTTP Form serialization and deserialization
+* Document generation
+
+And the API it built is also standard Restful HTTP API, so you can call it with any programming language.
 
 ## Why this project?
 
@@ -125,7 +128,7 @@ That's it! It will use your SDK to generate a new call to your server, and the r
   * [HTTP Status code translation](./docs/http_status_code.md)
 * API Design
   * [Call with HTTP parameter](./docs/http_get.param.md)
-  * [Call with HTTP Post(Json)](./inop.md)
+  * [Call with HTTP Post(Json)](./docs/http_post.json.md)
   * [Call with HTTP Post(Form)](./inop.md)
   * [Result paging](./inop.md)
 * Server Programming
