@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.WebTools;
@@ -55,7 +54,7 @@ public class IntegrationTests
     [TestMethod]
     public async Task TestStatusCode()
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, _endpointUrl + "/home/noaction")
+        var request = new HttpRequestMessage(HttpMethod.Get, _endpointUrl + "/home/no-action")
         {
             Content = new FormUrlEncodedContent(new Dictionary<string, string>())
         };

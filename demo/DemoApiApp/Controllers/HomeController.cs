@@ -30,6 +30,7 @@ public class HomeController : ControllerBase
         return this.Protocol(Code.ResultShown, "Welcome to this API project!");
     }
 
+    [Route("home/no-action")]
     public IActionResult NoAction()
     {
         return this.Protocol(Code.NoActionTaken, "No action taken!");

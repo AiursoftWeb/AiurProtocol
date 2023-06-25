@@ -16,5 +16,5 @@ public class AiurResponse
         get;
         [Obsolete(message: "The set method is only for Json deserializer!")]
         set;
-    } = Assembly.GetExecutingAssembly()?.GetName()?.Version ?? new Version();
+    } = Assembly.GetExecutingAssembly().GetName().Version ?? new Version();
 }
