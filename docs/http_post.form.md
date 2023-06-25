@@ -44,23 +44,25 @@ public IActionResult RegisterForm([FromForm] RegisterAddressModel model)
 Now write your call SDK:
 
 ```csharp
-    public async Task<RegisterViewModel> RegisterForm(
-        string username, 
-        string password)
+// In SDK:
+public async Task<RegisterViewModel> RegisterForm(
+    string username, 
+    string password)
+{
+    var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterForm", new { });
+    var form = new AiurApiPayload(new RegisterAddressModel
     {
-        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterForm", new { });
-        var form = new AiurApiPayload(new RegisterAddressModel
-        {
-            Name = username,
-            Password = password
-        });
-        var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpFormBody);
-        return result;
-    }
+        Name = username,
+        Password = password
+    });
+    var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpFormBody);
+    return result;
+}
 ```
 
 And you can call it now:
 
 ```csharp
+// To use the SDK to call the server:
 var result = await sdk?.RegisterForm("anduin", "Password@1234")!;
 ```

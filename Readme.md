@@ -126,12 +126,13 @@ That's it! It will use your SDK to generate a new call to your server, and the r
 
 * General
   * [HTTP Status code translation](./docs/http_status_code.md)
-* API Design
+* API Design samples
+  * [Custom routing](./docs/custom_routing.md)
   * [Call with HTTP parameter](./docs/http_get.param.md)
   * [Call with HTTP Post(Json)](./docs/http_post.json.md)
   * [Call with HTTP Post(Form)](./docs/http_post.form.md)
-  * [Result paging](./inop.md)
-* Server Programming
+  * [Result paging](./docs/result_paging.md)
+* Server Programming features
   * [Response complicated values](./inop.md)
   * [Return expected error](./inop.md)
   * [Unexpected error](./inop.md)

@@ -45,6 +45,7 @@ public IActionResult RegisterJson([FromBody] RegisterAddressModel model)
 Now write your call SDK:
 
 ```csharp
+// In SDK:
 public async Task<RegisterViewModel> RegisterJson(string username, string password)
 {
     var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterJson", new { });
@@ -61,5 +62,6 @@ public async Task<RegisterViewModel> RegisterJson(string username, string passwo
 And you can call it now:
 
 ```csharp
+// To use the SDK to call the server:
 var result = await sdk?.RegisterJson("anduin", "Password@1234")!;
 ```
