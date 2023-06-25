@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.WebTools;
@@ -50,6 +51,21 @@ public class IntegrationTests
         var result = await sdk?.IndexAsync()!;
         Assert.AreEqual("Welcome to this API project!", result.Message);
     }
+
+    [TestMethod]
+    public async Task TestStatusCode()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, _endpointUrl + "/home/noaction")
+        {
+            Content = new FormUrlEncodedContent(new Dictionary<string, string>())
+        };
+
+        request.Headers.Add("accept", "application/json, text/html");
+        var client = new HttpClient();
+        var result = await client.SendAsync(request);
+        Assert.AreEqual(202, (int)result.StatusCode);
+    }
+
 
     [TestMethod]
     public async Task TestRedirect()

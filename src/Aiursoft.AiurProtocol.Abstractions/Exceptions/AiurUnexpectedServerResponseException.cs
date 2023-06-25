@@ -36,3 +36,11 @@ public class AiurBadApiInputException : AiurUnexpectedServerResponseException
         Reasons = response.Items ?? throw new WebException("Failed to parse remote API response.");
     }
 }
+
+public class AiurBadApiVersionException : AiurUnexpectedServerResponseException
+{
+    public AiurBadApiVersionException(Version sdkVersion, AiurResponse serverResponse)
+        : base(serverResponse, new InvalidOperationException($"The version of the responed API is: {serverResponse.ProtocolVersion} while the SDK version is {sdkVersion}."))
+    {
+    }
+}

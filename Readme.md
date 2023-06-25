@@ -121,16 +121,21 @@ That's it! It will use your SDK to generate a new call to your server, and the r
 
 ## Advanced usage
 
+* General
+  * [HTTP Status code translation](./docs/http_status_code.md)
 * API Design
-  * [Call with HTTP parameter](./inop.md)
+  * [Call with HTTP parameter](./docs/http_get.param.md)
   * [Call with HTTP Post(Json)](./inop.md)
   * [Call with HTTP Post(Form)](./inop.md)
+  * [Result paging](./inop.md)
 * Server Programming
   * [Response complicated values](./inop.md)
-  * [Result paging](./inop.md)
   * [Return expected error](./inop.md)
   * [Unexpected error](./inop.md)
   * [Input valid state checking](./inop.md)
+* SDK Programming
+  * [Error handling](./inop.md)
+  * [Client side input validation](./inop.md)
 
 ## Future features
 

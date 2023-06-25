@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IO.Compression;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using Aiursoft.AiurProtocol.Abstractions.Configuration;
 using Aiursoft.AiurProtocol.Attributes;
@@ -49,7 +50,8 @@ public class AiurProtocolClient : IScopedDependency
     public async Task<T> Get<T>(
         AiurApiEndpoint aiurApiEndpoint,
         bool autoRetry = true,
-        bool disableClientSideValidation = false)
+        bool disableClientSideValidation = false,
+        bool enforceSameVersion = true)
         where T : AiurResponse
     {
         if (!disableClientSideValidation)
@@ -65,7 +67,7 @@ public class AiurProtocolClient : IScopedDependency
         request.Headers.Add("accept", "application/json, text/html");
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
-        return await ProcessResponse<T>(response);
+        return await ProcessResponse<T>(response, enforceSameVersion);
     }
 
     public async Task<T> Post<T>(
@@ -73,7 +75,8 @@ public class AiurProtocolClient : IScopedDependency
         AiurApiPayload payload,
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
-        bool disableClientSideValidation = false) where T : AiurResponse
+        bool disableClientSideValidation = false,
+        bool enforceSameVersion = true) where T : AiurResponse
     {
         if (!disableClientSideValidation)
         {
@@ -91,7 +94,7 @@ public class AiurProtocolClient : IScopedDependency
         request.Headers.Add("accept", "application/json");
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
-        return await ProcessResponse<T>(response);
+        return await ProcessResponse<T>(response, enforceSameVersion);
     }
     
     private static void ClientSideValidate(object? input)
@@ -118,14 +121,28 @@ public class AiurProtocolClient : IScopedDependency
         }
     }
 
-    private async Task<T> ProcessResponse<T>(HttpResponseMessage response) where T : AiurResponse
+    private async Task<T> ProcessResponse<T>(HttpResponseMessage response, bool enforceSameVersion) where T : AiurResponse
     {
         var content = await GetResponseContent(response);
         if (content.IsValidResponse(out AiurResponse? responseObject))
         {
+            if (responseObject == null)
+            {
+                throw new AiurUnexpectedServerResponseException(new AiurResponse(), new InvalidOperationException("The server returned null!"));
+            }
+
+            if (enforceSameVersion)
+            {
+                var sdkVersion = Assembly.GetExecutingAssembly()?.GetName()?.Version ?? new Version();
+                if (sdkVersion != responseObject!.ProtocolVersion)
+                {
+                    throw new AiurBadApiVersionException(sdkVersion, responseObject);
+                }
+            }
+
             switch (responseObject?.Code)
             {
-                case Code.Success or Code.NoActionNeeded:
+                case Code.JobDone or Code.NoActionTaken or Code.ResultShown:
                 {
                     // Success.
                     var model = JsonConvert.DeserializeObject<T>(content, ProtocolConsts.JsonSettings)!;

@@ -24,10 +24,15 @@ public class HomeController : ControllerBase
             Question = "1"
         }));
     }
-    
+
     public IActionResult Index()
     {
-        return this.Protocol(Code.Success, "Welcome to this API project!");
+        return this.Protocol(Code.ResultShown, "Welcome to this API project!");
+    }
+
+    public IActionResult NoAction()
+    {
+        return this.Protocol(Code.NoActionTaken, "No action taken!");
     }
 
     public IActionResult InvalidResponseShouldNotSuccess()
@@ -37,7 +42,7 @@ public class HomeController : ControllerBase
 
     public IActionResult GetANumber()
     {
-        return this.Protocol(Code.NoActionNeeded, "Got your value!", value: 123);
+        return this.Protocol(Code.ResultShown, "Got your value!", value: 123);
     }
 
     public IActionResult QuerySomething([FromQuery] string question)
@@ -46,7 +51,7 @@ public class HomeController : ControllerBase
             .Where(i => i.ToString().EndsWith(question))
             .Take(10)
             .ToList();
-        return this.Protocol(Code.Success, "Got your value!", items);
+        return this.Protocol(Code.ResultShown, "Got your value!", items);
     }
     
     public async Task<IActionResult> QuerySomethingPaged([FromQuery]QueryNumberAddressModel model)
@@ -58,13 +63,13 @@ public class HomeController : ControllerBase
             .Where(i => i.ToString().EndsWith(model.Question ?? string.Empty))
             .AsQueryable()
             .OrderBy(i => i);
-        return await this.Protocol(Code.Success, "Got your value!", items, model);
+        return await this.Protocol(Code.ResultShown, "Got your value!", items, model);
     }
 
     public IActionResult GetFibonacciFirst10()
     {
         var items = Fibonacci().Take(10).ToList();
-        return this.Protocol(Code.Success, "Got your value!", items);
+        return this.Protocol(Code.ResultShown, "Got your value!", items);
     }
 
     [HttpPost]
@@ -72,7 +77,7 @@ public class HomeController : ControllerBase
     {
         return this.Protocol(new RegisterViewModel
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Registered.",
             UserId = "your-id-" + model.Name
         });
@@ -83,7 +88,7 @@ public class HomeController : ControllerBase
     {
         return this.Protocol(new RegisterViewModel
         {
-            Code = Code.Success,
+            Code = Code.JobDone,
             Message = "Registered.",
             UserId = "your-id-" + model.Name
         });

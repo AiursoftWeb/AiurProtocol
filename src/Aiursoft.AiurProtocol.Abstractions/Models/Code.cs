@@ -2,8 +2,12 @@
 
 public enum Code
 {
-    NoActionNeeded = 1,
-    Success = 0,
+    // Success
+    JobDone = 2,
+    NoActionTaken = 1,
+    ResultShown = 0,
+
+    // Failed
     WrongKey = -1,
     PlaceHolder2 = -2,
     PlaceHolder3 = -3,

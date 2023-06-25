@@ -10,7 +10,12 @@ internal static class StatusCodeTranslator
     {
         return response.Code switch
         {
-            Code.Success => HttpStatusCode.OK,
+            // Success
+            Code.JobDone => HttpStatusCode.Created,
+            Code.NoActionTaken => HttpStatusCode.Accepted,
+            Code.ResultShown => HttpStatusCode.OK,
+
+            // Failed
             Code.WrongKey => HttpStatusCode.Unauthorized,
             Code.PlaceHolder2 => HttpStatusCode.Gone,
             Code.PlaceHolder3 => HttpStatusCode.Gone,
@@ -30,7 +35,12 @@ internal static class StatusCodeTranslator
     {
         return response.Code switch
         {
-            Code.Success => LogLevel.Information,
+            // Success
+            Code.JobDone => LogLevel.Information,
+            Code.NoActionTaken => LogLevel.Information,
+            Code.ResultShown => LogLevel.Trace,
+
+            // Failed
             Code.WrongKey => LogLevel.Warning,
             Code.PlaceHolder2 => LogLevel.Warning,
             Code.PlaceHolder3 => LogLevel.Warning,
