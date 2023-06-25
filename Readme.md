@@ -129,7 +129,7 @@ That's it! It will use your SDK to generate a new call to your server, and the r
 * API Design
   * [Call with HTTP parameter](./docs/http_get.param.md)
   * [Call with HTTP Post(Json)](./docs/http_post.json.md)
-  * [Call with HTTP Post(Form)](./inop.md)
+  * [Call with HTTP Post(Form)](./docs/http_post.form.md)
   * [Result paging](./inop.md)
 * Server Programming
   * [Response complicated values](./inop.md)

@@ -1,11 +1,10 @@
-# How to use AiurProtocol to post HTTP with JSON body
+# How to use AiurProtocol to post HTTP with HTML form body
 
 Build your SDK:
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DemoApiApp.Sdk.Models.ApiAddressModels;
 
@@ -13,7 +12,7 @@ public class RegisterAddressModel
 {
     [Required]
     [MaxLength(10)]
-    [JsonProperty(PropertyName = "uname")]
+    [FromForm(Name = "user-name")]
     public string? Name { get; set; }
 
     [Required]
@@ -31,7 +30,7 @@ Now build your server:
 ```csharp
 // In Controller:
 [HttpPost]
-public IActionResult RegisterJson([FromBody] RegisterAddressModel model)
+public IActionResult RegisterForm([FromForm] RegisterAddressModel model)
 {
     return this.Protocol(new RegisterViewModel
     {
@@ -45,21 +44,23 @@ public IActionResult RegisterJson([FromBody] RegisterAddressModel model)
 Now write your call SDK:
 
 ```csharp
-public async Task<RegisterViewModel> RegisterJson(string username, string password)
-{
-    var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterJson", new { });
-    var form = new AiurApiPayload(new RegisterAddressModel()
+    public async Task<RegisterViewModel> RegisterForm(
+        string username, 
+        string password)
     {
-        Name = username,
-        Password = password
-    });
-    var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpJsonBody);
-    return result;
-}
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "RegisterForm", new { });
+        var form = new AiurApiPayload(new RegisterAddressModel
+        {
+            Name = username,
+            Password = password
+        });
+        var result = await _http.Post<RegisterViewModel>(url, form, BodyFormat.HttpFormBody);
+        return result;
+    }
 ```
 
 And you can call it now:
 
 ```csharp
-var result = await sdk?.RegisterJson("anduin", "Password@1234")!;
+var result = await sdk?.RegisterForm("anduin", "Password@1234")!;
 ```
