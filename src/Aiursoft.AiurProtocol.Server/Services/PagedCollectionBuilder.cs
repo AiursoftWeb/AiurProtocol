@@ -2,7 +2,7 @@
 using Aiursoft.AiurProtocol.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.AiurProtocol.Services
+namespace Aiursoft.AiurProtocol.Server.Services
 {
     public static class AiurPagedCollectionBuilder
     {

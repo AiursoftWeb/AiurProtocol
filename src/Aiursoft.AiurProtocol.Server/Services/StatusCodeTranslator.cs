@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace Aiursoft.AiurProtocol.Services;
+namespace Aiursoft.AiurProtocol.Server.Services;
 
 internal static class StatusCodeTranslator
 {

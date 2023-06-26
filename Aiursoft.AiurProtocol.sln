@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9E582F31
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApiApp.Tests", "tests\DemoApiApp.Tests\DemoApiApp.Tests.csproj", "{8A52114E-BE1E-4D35-A616-35EE0AEE2F07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiursoft.AiurProtocol.Server", "src\Aiursoft.AiurProtocol.Server\Aiursoft.AiurProtocol.Server.csproj", "{84DB75AC-35BC-4C88-9022-8555A596EC5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{8A52114E-BE1E-4D35-A616-35EE0AEE2F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A52114E-BE1E-4D35-A616-35EE0AEE2F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A52114E-BE1E-4D35-A616-35EE0AEE2F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84DB75AC-35BC-4C88-9022-8555A596EC5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84DB75AC-35BC-4C88-9022-8555A596EC5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84DB75AC-35BC-4C88-9022-8555A596EC5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84DB75AC-35BC-4C88-9022-8555A596EC5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{E42BD4B3-A946-4EB1-87D7-E04E5CC8BAB6} = {4085B9FC-714D-43B9-A13C-69519E83B193}
 		{80028F83-4306-484A-812D-49A746CA7F20} = {4085B9FC-714D-43B9-A13C-69519E83B193}
 		{8A52114E-BE1E-4D35-A616-35EE0AEE2F07} = {9E582F31-BC89-43C6-B451-930CC5A2A48C}
+		{84DB75AC-35BC-4C88-9022-8555A596EC5C} = {A9991564-F6E7-4747-92CE-15AEBDCDCC68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {29F419B7-7BD4-495D-89CE-923649735457}

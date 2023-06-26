@@ -1,8 +1,8 @@
 ﻿using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Services;
+using Aiursoft.AiurProtocol.Server.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Aiursoft.AiurProtocol.Attributes;
+namespace Aiursoft.AiurProtocol.Server.Attributes;
 
 /// <summary>
 ///     This attribute will not throw any exception but will reject any invalid request directly with AiurCollection with

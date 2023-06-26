@@ -8,6 +8,8 @@
 
   <ItemGroup>
     
+    <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol.Server\Aiursoft.AiurProtocol.Server.csproj" />
+    
     <ProjectReference Include="..\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
   </ItemGroup>
 
