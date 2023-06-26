@@ -21,7 +21,13 @@ API development is a challenging task that requires handling various aspects suc
 
 ## Installation
 
-Run the folloing command to install `Aiursoft.AiurProtocol` to your ASP.NET Core project from [nuget.org](https://www.nuget.org/packages/Aiursoft.AiurProtocol/):
+Run the following command to install `Aiursoft.AiurProtocol.Server` to your ASP.NET Core project from [nuget.org](https://www.nuget.org/packages/Aiursoft.AiurProtocol.Server/):
+
+```bash
+dotnet add package Aiursoft.AiurProtocol.Server
+```
+
+Run the following command to install `Aiursoft.AiurProtocol` to your SDK project which sending requests to your server from [nuget.org](https://www.nuget.org/packages/Aiursoft.AiurProtocol/):
 
 ```bash
 dotnet add package Aiursoft.AiurProtocol
@@ -32,7 +38,7 @@ dotnet add package Aiursoft.AiurProtocol
 Now you can go to your Controller and return the protocol!
 
 ```csharp
-using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Server;
 
 public class HomeController : ControllerBase
 {
