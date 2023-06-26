@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Reflection;
 
-namespace Aiursoft.AiurProtocol.Models;
+namespace Aiursoft.AiurProtocol;
 
 public class AiurResponse
 {

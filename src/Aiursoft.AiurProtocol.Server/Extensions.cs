@@ -1,16 +1,26 @@
-﻿using Aiursoft.AiurProtocol.Interfaces;
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.AiurProtocol.Server.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Aiursoft.AiurProtocol.Server;
 
 public static class Extensions
 {
-        public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, Code code, string errorMessage, IOrderedQueryable<T> query, Pager pager)
+    public static IMvcBuilder AddAiurProtocol(this IMvcBuilder services)
+    {
+        JsonConvert.DefaultSettings = () => ProtocolSettings.JsonSettings;
+        return services.AddNewtonsoftJson(SetupAction);
+    }
+    
+    public static Action<MvcNewtonsoftJsonOptions> SetupAction => options =>
+    {
+        options.SerializerSettings.DateTimeZoneHandling = ProtocolSettings.JsonSettings.DateTimeZoneHandling;
+        options.SerializerSettings.ContractResolver = ProtocolSettings.JsonSettings.ContractResolver;
+    };
+
+    public static async Task<IActionResult> Protocol<T>(this ControllerBase controller, Code code, string errorMessage, IOrderedQueryable<T> query, Pager pager)
     {
         return controller.Protocol(await AiurPagedCollectionBuilder.BuildAsync(query, pager, code, errorMessage));
     }

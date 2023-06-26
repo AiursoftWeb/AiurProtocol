@@ -1,7 +1,6 @@
 ﻿using System.Net;
-using Aiursoft.AiurProtocol.Models;
 
-namespace Aiursoft.AiurProtocol.Exceptions;
+namespace Aiursoft.AiurProtocol;
 
 public class AiurBadApiInputException : AiurUnexpectedServerResponseException
 {

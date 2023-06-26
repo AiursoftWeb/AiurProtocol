@@ -1,7 +1,6 @@
-﻿using Aiursoft.AiurProtocol.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Aiursoft.AiurProtocol.Server.Services;
+namespace Aiursoft.AiurProtocol.Server;
 
 internal static class InvalidModelStateTranslator
 {

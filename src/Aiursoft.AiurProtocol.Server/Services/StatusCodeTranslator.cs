@@ -1,8 +1,7 @@
-﻿using Aiursoft.AiurProtocol.Models;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace Aiursoft.AiurProtocol.Server.Services;
+namespace Aiursoft.AiurProtocol.Server;
 
 internal static class StatusCodeTranslator
 {

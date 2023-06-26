@@ -1,8 +1,6 @@
-using Aiursoft.AiurProtocol.Abstractions.Configuration;
+using Aiursoft.AiurProtocol.Server;
 using Aiursoft.WebTools;
 using Microsoft.AspNetCore.HttpOverrides;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace DemoApiApp;
 
@@ -26,14 +24,9 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        JsonConvert.DefaultSettings = () => ProtocolConsts.JsonSettings;
         services
             .AddControllers()
-            .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+            .AddAiurProtocol();
     }
 
     public void Configure(IApplicationBuilder app)

@@ -33,18 +33,35 @@ Run the following command to install `Aiursoft.AiurProtocol` to your SDK project
 dotnet add package Aiursoft.AiurProtocol
 ```
 
+![dependency diagram](./demo/diagram.png)
+
 ## How to use on Server
+
+Register AiurProtocol in your `Startup.cs`
+
+```csharp
+// Your startup.cs on server
+using Aiursoft.AiurProtocol.Server;
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services
+        .AddControllers()
+        .AddAiurProtocol(); // <---- Add this after add controllers!
+}
+```
 
 Now you can go to your Controller and return the protocol!
 
 ```csharp
+// Your controller
 using Aiursoft.AiurProtocol.Server;
 
 public class HomeController : ControllerBase
 {
     public IActionResult Index()
     {
-        return this.Protocol(Code.Success, "Welcome to this API project!");
+        return this.Protocol(Code.ResultShown, "Welcome to this API project!");
     }
 }
 ```
@@ -56,6 +73,7 @@ Now you need to write an SDK for your API.
 After creating a new class library project, add the dependencies:
 
 ```xml
+<!-- Your SDK project file -->
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
@@ -64,25 +82,17 @@ After creating a new class library project, add the dependencies:
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-        <PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.0" />
+        <PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.7" />
     </ItemGroup>
 </Project>
 ```
 
-write the following method:
+Write the following method:
 
 ```csharp
+// In SDK
 using Aiursoft.AiurProtocol;
 using Microsoft.Extensions.DependencyInjection;
-
-public static IServiceCollection AddDemoService(this IServiceCollection services, string endPointUrl)
-{
-    services.AddAiurProtocolClient();
-    services.Configure<DemoServerConfig>(options => options.Instance = endPointUrl);
-    services.AddScoped<DemoAccess>();
-    return services;
-}
 
 public class DemoServerConfig
 {
@@ -109,18 +119,27 @@ public class DemoAccess
         return result;
     }
 }
+
+public static IServiceCollection AddDemoService(this IServiceCollection services, string endPointUrl)
+{
+    services.AddAiurProtocolClient();
+    services.Configure<DemoServerConfig>(options => options.Instance = endPointUrl);
+    services.AddScoped<DemoAccess>();
+    return services;
+}
+
 ```
 
-## How to use my new SDK
+## How to use your new SDK
 
-Now you can write a new class lib to use your new SDK to call your server!
+Now you can write a new console app to use your new SDK to call your server!
 
 ```csharp
 // To get your SDK:
 var services = new ServiceCollection();
 services.AddDemoService(endpointUrl);
 var serviceProvider = services.BuildServiceProvider();
-var sdk = serviceProvider.GetRequiredService<DemoAccess>();
+var sdk = serviceProvider.GetRequiredService<DemoAccess>(); // Or from dependency injection
 
 // To use your SDK:
 var result = await sdk?.IndexAsync()!;
@@ -151,10 +170,10 @@ That's it! It will use your SDK to generate a new call to your server, and the r
 
 It will support the following features in the future:
 
-* Api rate limit
-* Api version control
-* Api documentation
-* Api request logging and report
+* API rate limit
+* API version control
+* API documentation
+* API request logging and report
 
 ## How to contribute
 

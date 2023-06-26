@@ -1,4 +1,4 @@
-﻿using Aiursoft.AiurProtocol.Models;
+﻿using Aiursoft.AiurProtocol;
 
 namespace DemoApiApp.Sdk.Models.ApiViewModels;
 

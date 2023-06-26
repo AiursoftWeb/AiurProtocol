@@ -1,8 +1,6 @@
-﻿using Aiursoft.AiurProtocol.Interfaces;
-using Aiursoft.AiurProtocol.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Aiursoft.AiurProtocol.Server.Services
+namespace Aiursoft.AiurProtocol.Server
 {
     public static class AiurPagedCollectionBuilder
     {

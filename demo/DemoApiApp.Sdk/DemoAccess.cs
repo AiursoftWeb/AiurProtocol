@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Attributes;
-using Aiursoft.AiurProtocol.Models;
-using Aiursoft.AiurProtocol.Services;
 using DemoApiApp.Sdk.Models.ApiAddressModels;
 using DemoApiApp.Sdk.Models.ApiViewModels;
 using Microsoft.Extensions.Options;

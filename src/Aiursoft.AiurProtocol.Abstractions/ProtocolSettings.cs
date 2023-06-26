@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Aiursoft.AiurProtocol.Abstractions.Configuration;
+namespace Aiursoft.AiurProtocol;
 
-public static class ProtocolConsts
+public static class ProtocolSettings
 {
-    public static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+    public static readonly JsonSerializerSettings JsonSettings = new()
     {
         DateTimeZoneHandling = DateTimeZoneHandling.Utc,
         ContractResolver = new CamelCasePropertyNamesContractResolver()

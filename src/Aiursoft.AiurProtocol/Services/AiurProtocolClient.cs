@@ -3,16 +3,13 @@ using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using Aiursoft.AiurProtocol.Abstractions.Configuration;
 using Aiursoft.AiurProtocol.Attributes;
-using Aiursoft.AiurProtocol.Exceptions;
-using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Aiursoft.AiurProtocol.Services;
+namespace Aiursoft.AiurProtocol;
 
 public class AiurProtocolClient : IScopedDependency
 {
@@ -88,7 +85,7 @@ public class AiurProtocolClient : IScopedDependency
         {
             Content = format == BodyFormat.HttpFormBody
                 ? new FormUrlEncodedContent(payload.Params)
-                : new StringContent(JsonConvert.SerializeObject(payload.Param, ProtocolConsts.JsonSettings), Encoding.UTF8, "application/json")
+                : new StringContent(JsonConvert.SerializeObject(payload.Param, ProtocolSettings.JsonSettings), Encoding.UTF8, "application/json")
         };
 
         request.Headers.Add("accept", "application/json");
@@ -145,19 +142,19 @@ public class AiurProtocolClient : IScopedDependency
                 case Code.JobDone or Code.NoActionTaken or Code.ResultShown:
                 {
                     // Success.
-                    var model = JsonConvert.DeserializeObject<T>(content, ProtocolConsts.JsonSettings)!;
+                    var model = JsonConvert.DeserializeObject<T>(content, ProtocolSettings.JsonSettings)!;
                     return model;
                 }
                 case Code.InvalidInput:
                 {
                     // Invalid input.
-                    var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content, ProtocolConsts.JsonSettings)!;
+                    var model = JsonConvert.DeserializeObject<AiurCollection<string>>(content, ProtocolSettings.JsonSettings)!;
                     throw new AiurBadApiInputException(model);
                 }
                 default:
                 {
                     // Other errors.
-                    var model = JsonConvert.DeserializeObject<AiurResponse>(content, ProtocolConsts.JsonSettings)!;
+                    var model = JsonConvert.DeserializeObject<AiurResponse>(content, ProtocolSettings.JsonSettings)!;
                     throw new AiurUnexpectedServerResponseException(model);
                 }
             }

@@ -1,8 +1,6 @@
-﻿using Aiursoft.AiurProtocol.Abstractions.Configuration;
-using Aiursoft.AiurProtocol.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Aiursoft.AiurProtocol.Services;
+namespace Aiursoft.AiurProtocol;
 
 public static class StringHelpers
 {
@@ -27,7 +25,7 @@ public static class StringHelpers
             try
             {
                 // throw exception for illegal json format.
-                result = JsonConvert.DeserializeObject<AiurResponse>(strInput, ProtocolConsts.JsonSettings); 
+                result = JsonConvert.DeserializeObject<AiurResponse>(strInput, ProtocolSettings.JsonSettings); 
                 return result != null;
             }
             catch
