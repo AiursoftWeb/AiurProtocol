@@ -14,6 +14,7 @@ public IActionResult NoAction()
 Now when you are building the SDK, use the correct route:
 
 ```csharp
+// In SDK:
 public async Task<AiurResponse> NoActionAsync()
 {
     var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "no-action", new { });

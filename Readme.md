@@ -133,7 +133,7 @@ That's it! It will use your SDK to generate a new call to your server, and the r
   * [Call with HTTP Post(Form)](./docs/http_post.form.md)
   * [Result paging](./docs/result_paging.md)
 * Server Programming features
-  * [Response complicated values](./inop.md)
+  * [Response complicated values](./docs/custom_response.md)
   * [Return expected error](./inop.md)
   * [Unexpected error](./inop.md)
   * [Input valid state checking](./inop.md)
