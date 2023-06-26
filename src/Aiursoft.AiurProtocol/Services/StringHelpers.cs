@@ -4,11 +4,6 @@ namespace Aiursoft.AiurProtocol;
 
 public static class StringHelpers
 {
-    public static string SafeTakeFirst(this string source, int count)
-    {
-        return source.Length <= count ? source : string.Concat(source.AsSpan(0, count - 3), "...");
-    }
-    
     public static bool IsValidResponse(this string strInput, out AiurResponse? result)
     {
         result = default;

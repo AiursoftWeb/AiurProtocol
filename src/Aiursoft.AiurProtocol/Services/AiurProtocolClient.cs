@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using Aiursoft.AiurProtocol.Attributes;
 using Aiursoft.Canon;
+using Aiursoft.CSTools.Tools;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -163,11 +164,11 @@ public class AiurProtocolClient : IScopedDependency
         if (response.IsSuccessStatusCode)
         {
             throw new InvalidOperationException(
-                $"The {nameof(AiurProtocolClient)} can only handle AiurProtocol content while the remote server returned content: {content.SafeTakeFirst(100)}.");
+                $"The {nameof(AiurProtocolClient)} can only handle AiurProtocol content while the remote server returned content: {content.SafeSubstring(100)}.");
         }
 
         throw new WebException(
-            $"The remote server returned unexpected error content: {content.SafeTakeFirst(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+            $"The remote server returned unexpected error content: {content.SafeSubstring(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
     }
     
     private static async Task<string> GetResponseContent(HttpResponseMessage response)
