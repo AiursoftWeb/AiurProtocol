@@ -7,14 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    
     <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol.Server\Aiursoft.AiurProtocol.Server.csproj" />
-    
     <ProjectReference Include="..\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aiursoft.WebTools" Version="6.0.22" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.19" />
+    <PackageReference Include="Aiursoft.WebTools" Version="6.0.24" />
   </ItemGroup>
 </Project>

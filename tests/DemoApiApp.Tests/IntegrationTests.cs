@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Aiursoft.AiurProtocol;
+using Aiursoft.CSTools.Tools;
 using Aiursoft.WebTools;
-using Aiursoft.XelNaga.Tools;
 using DemoApiApp.Sdk;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
