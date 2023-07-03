@@ -6,12 +6,12 @@ namespace DemoApiApp.Sdk.Models.ApiAddressModels;
 public class ComplicatedRouteAddressModel
 {
     [Required] 
-    public string AccessToken { get; set; }
+    public string? AccessToken { get; set; }
 
     [Required]
     [FromRoute]
-    public string SiteName { get; set; }
+    public string? SiteName { get; set; }
 
     [FromRoute]
-    public string FolderNames { get; set; }
+    public string? FolderNames { get; set; }
 }
