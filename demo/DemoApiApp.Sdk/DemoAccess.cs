@@ -22,8 +22,18 @@ public class DemoAccess
 
     public async Task<AiurResponse> IndexAsync()
     {
-        var url = new AiurApiEndpoint(_demoServerLocator.Instance, route: "/", param: new {});
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, route: "/api/hello-world", param: new {});
         var result = await _http.Get<AiurResponse>(url);
+        return result;
+    }
+    
+    public async Task<AiurValue<int>> WithRoute(int id)
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, route: "/api/ids/{Id}", param: new SampleRouteAddressModel
+        {
+            Id = id
+        });
+        var result = await _http.Get<AiurValue<int>>(url);
         return result;
     }
 

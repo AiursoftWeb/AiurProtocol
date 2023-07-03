@@ -23,9 +23,16 @@ public class HomeController : ControllerBase
         }));
     }
 
+    [Route("/api/hello-world/")]
     public IActionResult Index()
     {
         return this.Protocol(Code.ResultShown, "Welcome to this API project!");
+    }
+    
+    [Route("/api/ids/{Id}")]
+    public IActionResult WithRoute(SampleRouteAddressModel model)
+    {
+        return this.Protocol(Code.ResultShown, "Got your number!", value: model.Id);
     }
 
     [Route("home/no-action")]

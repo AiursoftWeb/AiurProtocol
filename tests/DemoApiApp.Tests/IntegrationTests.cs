@@ -49,6 +49,14 @@ public class IntegrationTests
         var result = await sdk?.IndexAsync()!;
         Assert.AreEqual("Welcome to this API project!", result.Message);
     }
+    
+    [TestMethod]
+    public async Task TestWithId()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        var result = await sdk?.WithRoute(123)!;
+        Assert.AreEqual(123, result.Value);
+    }
 
     [TestMethod]
     public async Task TestStatusCode()
