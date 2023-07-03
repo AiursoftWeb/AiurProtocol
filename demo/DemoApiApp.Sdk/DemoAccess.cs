@@ -22,7 +22,7 @@ public class DemoAccess
 
     public async Task<AiurResponse> IndexAsync()
     {
-        var url = new AiurApiEndpoint(_demoServerLocator.Instance);
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, route: "/", param: new {});
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
@@ -37,7 +37,7 @@ public class DemoAccess
     [ExcludeFromCodeCoverage]
     public async Task<AiurResponse> InvalidResponseShouldNotSuccessAsync()
     {
-        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "/Home/InvalidResponseShouldNotSuccess", new { });
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "InvalidResponseShouldNotSuccess", new { });
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
@@ -116,6 +116,18 @@ public class DemoAccess
     public async Task<AiurResponse> CrashUnknownAsync()
     {
         var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "CrashUnknown", new { });
+        var result = await _http.Get<AiurResponse>(url);
+        return result;
+    }
+    
+    public async Task<AiurResponse> ComplicatedRoute(string accessToken, string siteName, string folderNames)
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "ViewContent/{SiteName}/{**FolderNames}", new ComplicatedRouteAddressModel
+        {
+            AccessToken = accessToken,
+            SiteName = siteName,
+            FolderNames = folderNames
+        });
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }

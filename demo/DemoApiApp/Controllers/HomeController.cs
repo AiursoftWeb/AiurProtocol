@@ -15,7 +15,7 @@ public class HomeController : ControllerBase
 {
     public IActionResult Redirect()
     {
-        return this.Protocol(new AiurRelativePath("Home", nameof(QuerySomethingPaged), new QueryNumberAddressModel
+        return this.Protocol(new AiurApiEndpoint(string.Empty, "Home", nameof(QuerySomethingPaged), new QueryNumberAddressModel
         {
             PageNumber = 1,
             PageSize = 3,
@@ -105,6 +105,21 @@ public class HomeController : ControllerBase
         // ReSharper disable once IntDivisionByZero
         _ = 3 / (1 - one);
         return Ok();
+    }
+
+    [Route("ViewContent/{SiteName}/{**FolderNames}")]
+    public IActionResult ComplicatedRoute(ComplicatedRouteAddressModel model)
+    {
+        if (model.SiteName == "site@name" && 
+            model.FolderNames == "folder1/folder2/folder3" &&
+            model.AccessToken == "token")
+        {
+            return this.Protocol(Code.NoActionTaken, "Success!");
+        }
+        else
+        {
+            throw new AiurServerException(Code.WrongKey, "Unexpected request value!");
+        }
     }
 
     private IEnumerable<int> Fibonacci()

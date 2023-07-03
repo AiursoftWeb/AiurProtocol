@@ -57,9 +57,9 @@ public static class Extensions
         return controller.HttpContext.Protocol(model);
     }
     
-    public static IActionResult Protocol(this ControllerBase controller, AiurRelativePath relativePath)
+    public static IActionResult Protocol(this ControllerBase controller, AiurApiEndpoint absolutePath)
     {
-        return controller.Redirect(relativePath.ToString());
+        return controller.Redirect(absolutePath.ToString());
     }
     
     public static IActionResult Protocol(this HttpContext context, AiurResponse model)

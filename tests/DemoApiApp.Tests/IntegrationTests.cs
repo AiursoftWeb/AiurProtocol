@@ -213,4 +213,11 @@ public class IntegrationTests
             Assert.AreEqual(Code.UnknownError, e.Response.Code);
         }
     }
+    
+    [TestMethod]
+    public async Task TestComplicatedRoute()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        _ = await sdk?.ComplicatedRoute("token", "site@name", "folder1/folder2/folder3")!;
+    }
 }
