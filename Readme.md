@@ -7,13 +7,17 @@
 
 AiurProtocol defines an API programming practice to easily build a RESTful API. It simplifies the process of
 
+* Aoth HTTP request path building
+* Strong-typed API model sharing
 * Auto HTTP status code translation
-* Auto error handling
-* Auto input model validation
-* Auto JSON\HTTP Form serialization and deserialization
+* Auto error handling\error passthrough
+* Auto input model validation\local validation
+* Auto serialization and deserialization
 * Document generation
 
 And the API it built is also standard Restful HTTP API, so you can call it with any programming language.
+
+With AiurProtocol, you can focus on designing your API and forget about those complications!
 
 ## Why this project?
 
@@ -59,6 +63,7 @@ using Aiursoft.AiurProtocol.Server;
 
 public class HomeController : ControllerBase
 {
+    [Route("/api/hello-world")]
     public IActionResult Index()
     {
         return this.Protocol(Code.ResultShown, "Welcome to this API project!");
@@ -114,7 +119,7 @@ public class DemoAccess
 
     public async Task<AiurResponse> IndexAsync()
     {
-        var url = new AiurApiEndpoint(_demoServerLocator.Instance);
+        var url = new AiurApiEndpoint(host: _demoServerLocator.Instance, route: "/api/hello-world", param: new {});
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
