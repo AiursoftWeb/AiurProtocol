@@ -63,6 +63,7 @@ using Aiursoft.AiurProtocol.Server;
 
 public class HomeController : ControllerBase
 {
+    [Route("/api/hello-world")]
     public IActionResult Index()
     {
         return this.Protocol(Code.ResultShown, "Welcome to this API project!");
@@ -118,7 +119,7 @@ public class DemoAccess
 
     public async Task<AiurResponse> IndexAsync()
     {
-        var url = new AiurApiEndpoint(_demoServerLocator.Instance);
+        var url = new AiurApiEndpoint(host: _demoServerLocator.Instance, route: "/api/hello-world", param: new {});
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
