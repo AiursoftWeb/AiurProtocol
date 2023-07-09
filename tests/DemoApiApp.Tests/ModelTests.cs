@@ -44,18 +44,18 @@ public class ModelTests
     }
     
     [TestMethod]
-    public void TestRoute()
+    public void TestRouteWithEmptyParam()
     {
         var url = new AiurApiEndpoint("https://www.google.com",
             "/Folders/ViewContent/{SiteName}/{**FolderNames}", new ViewContentAddressModel
             {
                 SiteName = "siteName",
-                FolderNames = "folderNames/folder_b/folder_c",
+                FolderNames = string.Empty,
                 AccessToken = "accessToken"
             });
         var result = url.ToString();
         Assert.AreEqual(
-            "https://www.google.com/Folders/ViewContent/siteName/folderNames/folder_b/folder_c?accesstoken=accessToken",
+            "https://www.google.com/Folders/ViewContent/siteName/?accesstoken=accessToken",
             result);
     }
 }
