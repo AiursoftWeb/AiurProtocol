@@ -37,10 +37,9 @@ public class ModelTests
         var result = new AiurApiEndpoint(string.Empty, "OAuth", "SecondAuth", new FinishAuthInfo
         {
             AppId = "appId",
-            RedirectUri = "redirect_uri",
-            State = "state"
+            RedirectUri = "redirect_uri"
         }).ToString();
-        Assert.AreEqual("/OAuth/SecondAuth?appid=appId&redirect_uri=redirect_uri&state=state", result);
+        Assert.AreEqual("/OAuth/SecondAuth?appid=appId&redirect_uri=redirect_uri", result);
     }
     
     [TestMethod]

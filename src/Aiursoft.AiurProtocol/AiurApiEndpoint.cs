@@ -32,7 +32,7 @@ public class AiurApiEndpoint : AiurApiPayload
         var appendPart = "?";
         foreach (var param in Params)
         {
-            if (!paramsInAddress.Contains(param.Key))
+            if (!paramsInAddress.Contains(param.Key) && !string.IsNullOrWhiteSpace(param.Value))
             {
                 appendPart = $"{appendPart}{param.Key.ToLower()}={Uri.EscapeDataString(param.Value)}&";
             }
