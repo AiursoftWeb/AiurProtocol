@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
+        <OutputType>Library</OutputType>
         <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>DemoApiApp.Sdk</AssemblyName>
+        <RootNamespace>DemoApiApp.Sdk</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -9,6 +13,6 @@
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol\Aiursoft.AiurProtocol.csproj" />
+        <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol\Aiursoft.AiurProtocol.csproj" />
     </ItemGroup>
 </Project>

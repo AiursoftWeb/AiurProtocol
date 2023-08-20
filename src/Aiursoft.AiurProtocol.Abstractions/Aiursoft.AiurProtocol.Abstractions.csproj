@@ -1,27 +1,27 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Version>6.0.10</Version>
-    <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
-    <!--Nuget-->
-    <Company>Aiursoft</Company>
-    <Product>AiurProtocol</Product>
-    <Authors>anduin</Authors>
-    <Description>API Communication practice</Description>
-    <PackageTags>pactice api handling</PackageTags>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>Aiursoft.AiurProtocol.Abstractions</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <Version>6.0.10</Version>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Aiursoft.AiurProtocol.Abstractions</AssemblyName>
+        <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
+        <IsTestProject>false</IsTestProject>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Company>Aiursoft</Company>
+        <Product>AiurProtocol</Product>
+        <Authors>anduin</Authors>
+        <Description>API Communication practice</Description>
+        <PackageId>Aiursoft.AiurProtocol.Abstractions</PackageId>
+        <PackageTags>pactice api handling</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 </Project>
