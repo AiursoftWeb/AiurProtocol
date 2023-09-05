@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <Version>6.0.11</Version>
-        <TargetFramework>net6.0</TargetFramework>
+        <Version>7.0.0</Version>
+        <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>Aiursoft.AiurProtocol</AssemblyName>
         <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
         <IsTestProject>false</IsTestProject>
@@ -25,8 +25,8 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Aiursoft.Canon" Version="6.0.13" />
-        <PackageReference Include="Aiursoft.CSTools" Version="6.0.25" />
+        <PackageReference Include="Aiursoft.Canon" Version="7.0.0" />
+        <PackageReference Include="Aiursoft.CSTools" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Aiursoft.AiurProtocol.Abstractions\Aiursoft.AiurProtocol.Abstractions.csproj" />
