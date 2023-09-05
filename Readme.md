@@ -4,6 +4,7 @@
 [![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/badges/master/pipeline.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/badges/master/coverage.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/pipelines)
 [![NuGet version (Aiursoft.AiurProtocol)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol/)
+[![NuGet version (Aiursoft.AiurProtocol.Server)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.Server.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol.Server/)
 
 AiurProtocol defines an API programming practice to easily build a RESTful API. It simplifies the process of
 
