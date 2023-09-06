@@ -1,6 +1,8 @@
 using Aiursoft.AiurProtocol.Server;
 using Aiursoft.WebTools;
+using Aiursoft.WebTools.Models;
 using Microsoft.AspNetCore.HttpOverrides;
+using static Aiursoft.WebTools.Extends;
 
 namespace DemoApiApp;
 
@@ -8,28 +10,22 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        var app = Extends.App<Startup>(args);
+        var app = App<Startup>(args);
         await app.RunAsync();
     }
 }
 
-public class Startup
+public class Startup : IWebStartup
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
         services
             .AddControllers()
+            .AddApplicationPart(typeof(Startup).Assembly)
             .AddAiurProtocol();
     }
 
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment webHostEnvironment)
     {
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
