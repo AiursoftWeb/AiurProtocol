@@ -26,7 +26,7 @@ public class IntegrationTests
     [TestInitialize]
     public async Task TestInitialize()
     {
-        _server = Extends.App<Startup>(port: _port);
+        _server = Extends.App<Startup>(Array.Empty<string>(), port: _port);
         await _server.StartAsync();
 
         var services = new ServiceCollection();
