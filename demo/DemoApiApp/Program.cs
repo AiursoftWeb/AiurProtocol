@@ -26,6 +26,7 @@ public class Startup
     {
         services
             .AddControllers()
+            .AddApplicationPart(typeof(Startup).Assembly)
             .AddAiurProtocol();
     }
 

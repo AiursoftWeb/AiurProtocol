@@ -3,6 +3,8 @@ using Aiursoft.AiurProtocol;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.WebTools;
 using DemoApiApp.Sdk;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DemoApiApp.Tests;
