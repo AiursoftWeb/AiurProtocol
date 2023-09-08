@@ -49,8 +49,8 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
                 {
                     var maskedResponse = new AiurResponse
                     {
-                        Code = Code.RemoteNotAccessible,
-                        Message = $"The {projectName} server had an inside conflict that it couldn't process your request."
+                        Code = Code.UnknownError,
+                        Message = $"The {projectName} server had an internal error that it couldn't process your request."
                     };
                     ProcessResult(context, maskedResponse);
                     return;
