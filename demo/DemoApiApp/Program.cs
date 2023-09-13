@@ -32,6 +32,6 @@ public class Startup : IWebStartup
         });
         app.UseHttpsRedirection();
         app.UseRouting();
-        app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+        app.MapDefaultControllerRoute();
     }
 }
