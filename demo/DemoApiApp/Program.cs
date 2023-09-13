@@ -24,7 +24,7 @@ public class Startup : IWebStartup
             .AddAiurProtocol();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment webHostEnvironment)
+    public void Configure(WebApplication app)
     {
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
