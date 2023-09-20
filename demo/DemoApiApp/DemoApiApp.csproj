@@ -14,6 +14,6 @@
         <ProjectReference Include="..\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Aiursoft.WebTools" Version="7.0.3" />
+        <PackageReference Include="Aiursoft.WebTools" Version="7.0.4" />
     </ItemGroup>
 </Project>
