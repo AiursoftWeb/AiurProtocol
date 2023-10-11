@@ -1,31 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <Version>7.0.2</Version>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyName>Aiursoft.AiurProtocol.Server</AssemblyName>
-        <RootNamespace>Aiursoft.AiurProtocol.Server</RootNamespace>
-        <IsTestProject>false</IsTestProject>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <Company>Aiursoft</Company>
-        <Product>AiurProtocol</Product>
-        <Authors>anduin</Authors>
-        <Description>API Communication practice</Description>
-        <PackageId>Aiursoft.AiurProtocol.Server</PackageId>
-        <PackageTags>pactice api handling</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol</PackageProjectUrl>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.11" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Aiursoft.AiurProtocol\Aiursoft.AiurProtocol.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Version>7.0.3</Version>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Aiursoft.AiurProtocol.Server</AssemblyName>
+    <RootNamespace>Aiursoft.AiurProtocol.Server</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Aiursoft</Company>
+    <Product>AiurProtocol</Product>
+    <Authors>anduin</Authors>
+    <Description>API Communication practice</Description>
+    <PackageId>Aiursoft.AiurProtocol.Server</PackageId>
+    <PackageTags>pactice api handling</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aiursoft.AiurProtocol\Aiursoft.AiurProtocol.csproj" />
+  </ItemGroup>
 </Project>
