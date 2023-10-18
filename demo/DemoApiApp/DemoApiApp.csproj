@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyName>DemoApiApp</AssemblyName>
-        <RootNamespace>DemoApiApp</RootNamespace>
-        <IsTestProject>false</IsTestProject>
-        <IsPackable>false</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol.Server\Aiursoft.AiurProtocol.Server.csproj" />
-        <ProjectReference Include="..\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Aiursoft.WebTools" Version="7.0.4" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>DemoApiApp</AssemblyName>
+    <RootNamespace>DemoApiApp</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Aiursoft.AiurProtocol.Server\Aiursoft.AiurProtocol.Server.csproj" />
+    <ProjectReference Include="..\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aiursoft.WebTools" Version="7.0.5" />
+  </ItemGroup>
 </Project>
