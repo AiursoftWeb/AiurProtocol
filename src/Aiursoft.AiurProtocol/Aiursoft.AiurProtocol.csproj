@@ -1,34 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <Version>7.0.2</Version>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyName>Aiursoft.AiurProtocol</AssemblyName>
-        <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
-        <IsTestProject>false</IsTestProject>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <Company>Aiursoft</Company>
-        <Product>AiurProtocol</Product>
-        <Authors>anduin</Authors>
-        <Description>API Communication practice</Description>
-        <PackageId>Aiursoft.AiurProtocol</PackageId>
-        <PackageTags>pactice api handling</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol</PackageProjectUrl>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
-    </PropertyGroup>
-    <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Aiursoft.Canon" Version="7.0.4" />
-        <PackageReference Include="Aiursoft.CSTools" Version="7.0.0" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Aiursoft.AiurProtocol.Abstractions\Aiursoft.AiurProtocol.Abstractions.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Version>7.0.5</Version>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Aiursoft.AiurProtocol</AssemblyName>
+    <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Aiursoft</Company>
+    <Product>AiurProtocol</Product>
+    <Authors>anduin</Authors>
+    <Description>API Communication practice</Description>
+    <PackageId>Aiursoft.AiurProtocol</PackageId>
+    <PackageTags>pactice api handling</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aiursoft.Canon" Version="7.0.4" />
+    <PackageReference Include="Aiursoft.CSTools" Version="7.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aiursoft.AiurProtocol.Abstractions\Aiursoft.AiurProtocol.Abstractions.csproj" />
+  </ItemGroup>
 </Project>
