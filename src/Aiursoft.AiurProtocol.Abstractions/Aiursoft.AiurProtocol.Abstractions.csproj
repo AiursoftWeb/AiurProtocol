@@ -1,27 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <Version>7.0.5</Version>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyName>Aiursoft.AiurProtocol.Abstractions</AssemblyName>
-        <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
-        <IsTestProject>false</IsTestProject>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-        <IsPackable>true</IsPackable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <Company>Aiursoft</Company>
-        <Product>AiurProtocol</Product>
-        <Authors>anduin</Authors>
-        <Description>API Communication practice</Description>
-        <PackageId>Aiursoft.AiurProtocol.Abstractions</PackageId>
-        <PackageTags>pactice api handling</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    </ItemGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Version>7.0.6</Version>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Aiursoft.AiurProtocol.Abstractions</AssemblyName>
+    <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Aiursoft</Company>
+    <Product>AiurProtocol</Product>
+    <Authors>anduin</Authors>
+    <Description>API Communication practice</Description>
+    <PackageId>Aiursoft.AiurProtocol.Abstractions</PackageId>
+    <PackageTags>pactice api handling</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <None Include="../../Readme.md" Pack="true" PackagePath="." />
+  </ItemGroup>
 </Project>
