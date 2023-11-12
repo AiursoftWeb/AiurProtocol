@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -76,6 +77,8 @@ public static class Extensions
         }
 
         context.Response.StatusCode = (int)model.ConvertToHttpStatusCode();
+        
+        model.ProtocolVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version();
         return new JsonResult(model);
     }
 }
