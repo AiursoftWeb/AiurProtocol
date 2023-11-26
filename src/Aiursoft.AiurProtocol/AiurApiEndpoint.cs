@@ -38,7 +38,7 @@ public class AiurApiEndpoint : AiurApiPayload
             }
         }
 
-        return InjectParamsToAddress() + appendPart.TrimEnd('?', '&');
+        return InjectParamsToRoute() + appendPart.TrimEnd('?', '&');
     }
 
     private static string EncodeWithoutPath(string input)
@@ -66,7 +66,14 @@ public class AiurApiEndpoint : AiurApiPayload
         return matches.Select(m => m.Groups[1].Value).Select(v => v.TrimStart('*')).ToArray();
     }
 
-    public virtual string InjectParamsToAddress()
+    /// <summary>
+    /// Injects the parameters to the address.
+    /// 
+    /// This will parse the address and replace all the variables with the actual value.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public virtual string InjectParamsToRoute()
     {
         return Regex.Replace(HostAndRoute, @"\{([^{}]+)\}", match =>
         {
