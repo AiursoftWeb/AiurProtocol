@@ -49,7 +49,7 @@ public class AiurProtocolClient : IScopedDependency
         AiurApiEndpoint aiurApiEndpoint,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = true)
+        bool enforceSameVersion = false)
         where T : AiurResponse
     {
         if (!disableClientSideValidation)
@@ -74,7 +74,7 @@ public class AiurProtocolClient : IScopedDependency
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = true) where T : AiurResponse
+        bool enforceSameVersion = false) where T : AiurResponse
     {
         if (!disableClientSideValidation)
         {
