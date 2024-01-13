@@ -64,6 +64,10 @@ Now you can go to your Controller and return the protocol!
 // Your controller
 using Aiursoft.AiurProtocol.Server;
 
+[ApiExceptionHandler(
+    PassthroughRemoteErrors = true, 
+    PassthroughAiurServerException = true)]
+[ApiModelStateChecker]
 public class HomeController : ControllerBase
 {
     [Route("/api/hello-world")]
