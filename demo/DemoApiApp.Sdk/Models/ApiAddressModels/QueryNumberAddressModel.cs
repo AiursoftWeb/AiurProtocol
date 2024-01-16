@@ -1,4 +1,5 @@
 ﻿using Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
 
 namespace DemoApiApp.Sdk.Models.ApiAddressModels;
 

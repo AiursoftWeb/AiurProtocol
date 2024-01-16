@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
+
+namespace Aiursoft.AiurProtocol.Exceptions;
 
 /// <summary>
 ///     Throw this exception if the json respond by the Aiursoft Server was not with code = 0.

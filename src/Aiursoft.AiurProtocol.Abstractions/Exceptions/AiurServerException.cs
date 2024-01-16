@@ -1,4 +1,6 @@
-namespace Aiursoft.AiurProtocol;
+using Aiursoft.AiurProtocol.Models;
+
+namespace Aiursoft.AiurProtocol.Exceptions;
 
 /// <summary>
 ///     Throw this exception in any methods called from API. This will stop the controller logic.

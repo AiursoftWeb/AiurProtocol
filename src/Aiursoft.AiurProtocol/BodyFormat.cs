@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.AiurProtocol.Attributes;
+﻿namespace Aiursoft.AiurProtocol;
 
 public enum BodyFormat
 {

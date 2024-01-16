@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Aiursoft.AiurProtocol;
+namespace Aiursoft.AiurProtocol.Models;
 
 public abstract class Pager
 {

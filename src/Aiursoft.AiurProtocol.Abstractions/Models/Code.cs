@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.AiurProtocol;
+﻿namespace Aiursoft.AiurProtocol.Models;
 
 public enum Code
 {

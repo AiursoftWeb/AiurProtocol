@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Aiursoft.AiurProtocol.Server;
+namespace Aiursoft.AiurProtocol.Server.Attributes;
 
 /// <summary>
 ///     Adding this will handle `AiurAPIModelException` and return the result as JSON directly.

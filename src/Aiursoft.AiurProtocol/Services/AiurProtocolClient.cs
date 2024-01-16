@@ -3,14 +3,15 @@ using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using Aiursoft.AiurProtocol.Attributes;
+using Aiursoft.AiurProtocol.Exceptions;
+using Aiursoft.AiurProtocol.Models;
 using Aiursoft.Canon;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.Scanner.Abstractions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Aiursoft.AiurProtocol;
+namespace Aiursoft.AiurProtocol.Services;
 
 public class AiurProtocolClient : IScopedDependency
 {

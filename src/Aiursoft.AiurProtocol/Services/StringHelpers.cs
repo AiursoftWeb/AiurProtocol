@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Aiursoft.AiurProtocol.Models;
+using Newtonsoft.Json;
 
-namespace Aiursoft.AiurProtocol;
+namespace Aiursoft.AiurProtocol.Services;
 
 public static class StringHelpers
 {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Aiursoft.AiurProtocol;
+namespace Aiursoft.AiurProtocol.Models;
 
 public class AiurValue<T> : AiurResponse
 {

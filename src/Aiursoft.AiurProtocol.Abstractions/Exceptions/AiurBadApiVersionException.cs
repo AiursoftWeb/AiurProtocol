@@ -1,4 +1,6 @@
-﻿namespace Aiursoft.AiurProtocol;
+﻿using Aiursoft.AiurProtocol.Models;
+
+namespace Aiursoft.AiurProtocol.Exceptions;
 
 public class AiurBadApiVersionException : AiurUnexpectedServerResponseException
 {
