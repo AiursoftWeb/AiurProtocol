@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Aiursoft.AiurProtocol;
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Aiursoft.CSTools.Tools;
