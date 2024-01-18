@@ -13,7 +13,7 @@ AiurProtocol defines an API programming practice to easily build a RESTful API. 
 * Auto HTTP request path building
 * Strong-typed API model sharing
 * Auto HTTP status code translation
-* Auto error handling\error passthrough
+* Auto error handling\error pass through
 * Auto input model validation\local validation
 * Auto serialization and deserialization
 * Document generation
