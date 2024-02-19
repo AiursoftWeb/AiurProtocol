@@ -89,12 +89,12 @@ After creating a new class library project, add the dependencies:
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Aiursoft.AiurProtocol" Version="6.0.7" />
+        <PackageReference Include="Aiursoft.AiurProtocol" Version="8.0.0" />
     </ItemGroup>
 </Project>
 ```
