@@ -13,17 +13,25 @@ using Newtonsoft.Json;
 
 namespace Aiursoft.AiurProtocol.Services;
 
-public class AiurProtocolClient(
-    RetryEngine retryEngine,
-    IHttpClientFactory clientFactory,
-    ILogger<AiurProtocolClient> logger)
-    : IScopedDependency
+public class AiurProtocolClient : IScopedDependency
 {
-    private readonly HttpClient _client = clientFactory.CreateClient();
+    private readonly HttpClient _client;
+    private readonly RetryEngine _retryEngine;
+    private readonly ILogger<AiurProtocolClient> _logger;
+
+    public AiurProtocolClient(
+        RetryEngine retryEngine,
+        IHttpClientFactory clientFactory,
+        ILogger<AiurProtocolClient> logger)
+    {
+        _client = clientFactory.CreateClient();
+        _retryEngine = retryEngine;
+        _logger = logger;
+    }
 
     private Task<HttpResponseMessage> SendWithRetry(HttpRequestMessage request)
     {
-        return retryEngine.RunWithRetry(async _ =>
+        return _retryEngine.RunWithRetry(async _ =>
             {
                 var response = await _client.SendAsync(request);
                 if (response.StatusCode is HttpStatusCode.BadGateway or HttpStatusCode.ServiceUnavailable)
@@ -35,7 +43,7 @@ public class AiurProtocolClient(
                 return response;
             },
             when: e => e is WebException,
-            onError: e => { logger.LogWarning(e, "Transient issue (retry available) happened with remote server"); });
+            onError: e => { _logger.LogWarning(e, "Transient issue (retry available) happened with remote server"); });
     }
 
     public async Task<T> Get<T>(
