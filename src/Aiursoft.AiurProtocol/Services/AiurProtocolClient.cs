@@ -18,18 +18,13 @@ public class AiurProtocolClient : IScopedDependency
     private readonly HttpClient _client;
     private readonly RetryEngine _retryEngine;
     private readonly ILogger<AiurProtocolClient> _logger;
-    private readonly CookieContainer _cookieContainer = new();
 
     public AiurProtocolClient(
         RetryEngine retryEngine,
         IHttpClientFactory clientFactory,
         ILogger<AiurProtocolClient> logger)
     {
-        var handler = new HttpClientHandler
-        {
-            CookieContainer = _cookieContainer // Use the cookie container in the handler
-        };
-        _client = new HttpClient(handler); // Create HttpClient with handler
+        _client = clientFactory.CreateClient();
         _retryEngine = retryEngine;
         _logger = logger;
     }
