@@ -60,10 +60,11 @@ public class AiurProtocolClient(
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
         return await ProcessResponse<T>(response, enforceSameVersion);
     }
-
-    public async Task<T> Post<T>(
+    
+    public async Task<T> Http<T>(
         AiurApiEndpoint aiurApiEndpoint,
         AiurApiPayload payload,
+        HttpMethod method,
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
@@ -75,7 +76,7 @@ public class AiurProtocolClient(
             ClientSideValidate(payload.Param);
         }
 
-        var request = new HttpRequestMessage(HttpMethod.Post, aiurApiEndpoint.ToString())
+        var request = new HttpRequestMessage(method, aiurApiEndpoint.ToString())
         {
             Content = format == BodyFormat.HttpFormBody
                 ? new FormUrlEncodedContent(payload.Params)
@@ -86,6 +87,40 @@ public class AiurProtocolClient(
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
         return await ProcessResponse<T>(response, enforceSameVersion);
+    }
+
+
+    public Task<T> Post<T>(
+        AiurApiEndpoint aiurApiEndpoint,
+        AiurApiPayload payload,
+        BodyFormat format = BodyFormat.HttpFormBody,
+        bool autoRetry = true,
+        bool disableClientSideValidation = false,
+        bool enforceSameVersion = false) where T : AiurResponse
+    {
+        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Post, format, autoRetry, disableClientSideValidation, enforceSameVersion);
+    }
+    
+    public Task<T> Put<T>(
+        AiurApiEndpoint aiurApiEndpoint,
+        AiurApiPayload payload,
+        BodyFormat format = BodyFormat.HttpFormBody,
+        bool autoRetry = true,
+        bool disableClientSideValidation = false,
+        bool enforceSameVersion = false) where T : AiurResponse
+    {
+        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Put, format, autoRetry, disableClientSideValidation, enforceSameVersion);
+    }
+    
+    public Task<T> Patch<T>(
+        AiurApiEndpoint aiurApiEndpoint,
+        AiurApiPayload payload,
+        BodyFormat format = BodyFormat.HttpFormBody,
+        bool autoRetry = true,
+        bool disableClientSideValidation = false,
+        bool enforceSameVersion = false) where T : AiurResponse
+    {
+        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Patch, format, autoRetry, disableClientSideValidation, enforceSameVersion);
     }
     
     private static void ClientSideValidate(object? input)
