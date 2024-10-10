@@ -15,6 +15,8 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
 
     public bool PassthroughAiurServerException { get; set; } = true;
     
+    public bool SuppressExceptionFromLog { get; set; } = false;
+    
     public override void OnException(ExceptionContext context)
     {
         var projectName = Assembly.GetEntryAssembly()?.GetName().Name;
@@ -72,7 +74,10 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
 
     private void ProcessResult(ExceptionContext context, AiurResponse response)
     {
-        context.ExceptionHandled = true;
+        if (SuppressExceptionFromLog)
+        {
+            context.ExceptionHandled = true;
+        }
         context.Result = context.HttpContext.Protocol(response);
     }
 }
