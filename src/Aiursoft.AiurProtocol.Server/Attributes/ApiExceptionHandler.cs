@@ -2,6 +2,7 @@
 using Aiursoft.AiurProtocol.Exceptions;
 using Aiursoft.AiurProtocol.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.AiurProtocol.Server.Attributes;
 
@@ -20,7 +21,13 @@ public class ApiExceptionHandler : ExceptionFilterAttribute
     public override void OnException(ExceptionContext context)
     {
         var projectName = Assembly.GetEntryAssembly()?.GetName().Name;
-
+        
+        if (!SuppressExceptionFromLog)
+        {
+            var logger = context.HttpContext.RequestServices.GetService(typeof(ILogger<ApiExceptionHandler>)) as ILogger<ApiExceptionHandler>;
+            logger?.LogCritical(context.Exception, "The {projectName} server crashed with an exception.", projectName);
+        }
+        
         base.OnException(context);
         switch (context.Exception)
         {
