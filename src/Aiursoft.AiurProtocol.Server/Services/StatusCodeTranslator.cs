@@ -37,7 +37,7 @@ internal static class StatusCodeTranslator
         {
             // Success
             Code.JobDone => LogLevel.Information,
-            Code.NoActionTaken => LogLevel.Information,
+            Code.NoActionTaken => LogLevel.Trace,
             Code.ResultShown => LogLevel.Trace,
 
             // Failed
@@ -45,7 +45,7 @@ internal static class StatusCodeTranslator
             Code.PlaceHolder2 => LogLevel.Warning,
             Code.PlaceHolder3 => LogLevel.Warning,
             Code.NotFound => LogLevel.Warning,
-            Code.UnknownError => LogLevel.Error,
+            Code.UnknownError => LogLevel.Critical,
             Code.RemoteNotAccessible => LogLevel.Error,
             Code.Conflict => LogLevel.Warning,
             Code.Unauthorized => LogLevel.Warning,
