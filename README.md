@@ -40,7 +40,25 @@ Run the following command to install `Aiursoft.AiurProtocol` to your SDK project
 dotnet add package Aiursoft.AiurProtocol
 ```
 
-![dependency diagram](./demo/diagram.png)
+You need to make sure your project dependency is as follows:
+
+```mermaid
+---
+title: Project dependency diagram
+---
+
+stateDiagram-v2
+    AiurProtocol.Server --> AiurProtocol
+    YourSdk --> AiurProtocol
+    YourServer --> AiurProtocol.Server
+    YourServer --> YourSdk
+    YourTests --> YourSdk
+    YourClientApp --> YourSdk
+```
+
+So `YourServer` can use `YourSdk` to build the API, and `YourClientApp` can use `YourSdk` to call the API.
+
+`AiurProtocol.Server` helps you building API, and `AiurProtocol` helps you call the API.
 
 ## How to use on Server
 
