@@ -3,7 +3,6 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/blob/master/LICENSE)
 [![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/badges/master/pipeline.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/badges/master/coverage.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/pipelines)
-[![NuGet version (Aiursoft.AiurProtocol.Abstractions)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.Abstractions.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol.Abstractions/)
 [![NuGet version (Aiursoft.AiurProtocol)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol/)
 [![NuGet version (Aiursoft.AiurProtocol.Server)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.Server.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol.Server/)
 [![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.cn/aiursoft/aiurprotocol.svg)](https://gitlab.aiursoft.cn/aiursoft/aiurprotocol/-/commits/master?ref_type=heads)
@@ -26,7 +25,7 @@ With AiurProtocol, you can focus on designing your API and forget about those co
 
 API development is a challenging task that requires handling various aspects such as HTTP status codes, error handling, input validation, documentation writing, and log checking. However, this project aims to simplify the API development process by providing a unified best practice approach. By following this approach, developers can efficiently handle HTTP status codes, error handling, input validation, documentation writing, and log checking. This project's goal is to save time and effort, allowing developers to focus more on developing new features.
 
-## Installation
+## How to install
 
 Run the following command to install `Aiursoft.AiurProtocol.Server` to your ASP.NET Core project from [nuget.org](https://www.nuget.org/packages/Aiursoft.AiurProtocol.Server/):
 
