@@ -21,15 +21,13 @@ public static class StringHelpers
             try
             {
                 // throw exception for illegal json format.
-                result = JsonConvert.DeserializeObject<AiurResponse>(strInput, ProtocolSettings.JsonSettings); 
+                result = JsonConvert.DeserializeObject<AiurResponse>(strInput, ProtocolSettings.JsonSettings);
                 return result != null;
             }
             catch
             {
                 // Suppress and return false.
             }
-
-            return false;
         }
 
         return false;
