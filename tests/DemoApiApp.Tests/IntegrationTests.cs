@@ -6,7 +6,6 @@ using Aiursoft.WebTools;
 using DemoApiApp.Sdk;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DemoApiApp.Tests;
 
@@ -52,7 +51,7 @@ public class IntegrationTests
         var result = await sdk?.IndexAsync()!;
         Assert.AreEqual("Welcome to this API project!", result.Message);
     }
-    
+
     [TestMethod]
     public async Task TestWithId()
     {
@@ -136,7 +135,7 @@ public class IntegrationTests
         catch (AiurBadApiInputException e)
         {
             Assert.AreEqual(
-                "The field PageSize must be between 1 and 100.", 
+                "The field PageSize must be between 1 and 100.",
                 (e.InnerException as AggregateException)!.InnerExceptions.Single().Message);
             return;
         }
@@ -179,7 +178,7 @@ public class IntegrationTests
         catch (AiurBadApiInputException e)
         {
             Assert.AreEqual("Multiple errors were found in the API input. (1 errors)", e.Message);
-            Assert.AreEqual(1, e.Reasons.Count);
+            Assert.HasCount(1, e.Reasons);
             Assert.AreEqual("The field Name must be a string or array type with a maximum length of '10'.",
                 e.Reasons.Single());
         }
@@ -220,11 +219,11 @@ public class IntegrationTests
         }
         catch (AiurUnexpectedServerResponseException e)
         {
-            Assert.IsTrue(e.Message.Contains("Sorry about that."));
+            Assert.Contains("Sorry about that.", e.Message);
             Assert.AreEqual(Code.UnknownError, e.Response.Code);
         }
     }
-    
+
     [TestMethod]
     public async Task TestComplicatedRoute()
     {
