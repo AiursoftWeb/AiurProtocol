@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Aiursoft.AiurProtocol;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DemoApiApp.Tests;
 
