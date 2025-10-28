@@ -17,9 +17,9 @@
     <PackageId>Aiursoft.AiurProtocol.Abstractions</PackageId>
     <PackageTags>pactice api handling</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.aiursoft.com/Aiursoft/AiurProtocol.Abstractions</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.cn/Aiursoft/AiurProtocol.git</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.aiursoft.com/Aiursoft/AiurProtocol.git</RepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
