@@ -190,10 +190,10 @@ That's it! It will use your SDK to generate a new call to your server, and the r
   * [Response complicated values](./docs/custom_response.md)
   * [Return expected error](./inop.md)
   * [Unexpected error](./inop.md)
-  * [Input valid state checking](./inop.md)
+  * [Input valid state checking](./docs/model_validation.md)
 * SDK Programming
   * [Error handling](./inop.md)
-  * [Client side input validation](./inop.md)
+  * [Client side input validation](./docs/model_validation.md)
 
 ## Future features
 

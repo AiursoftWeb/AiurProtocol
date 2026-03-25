@@ -185,6 +185,24 @@ public class IntegrationTests
     }
 
     [TestMethod]
+    public async Task TestRegisterMissingRequired()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.RegisterForm(null!, null!)!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurBadApiInputException e)
+        {
+            Assert.AreEqual("Multiple errors were found in the API input. (2 errors)", e.Message);
+            Assert.HasCount(2, e.Reasons);
+            Assert.IsTrue(e.Reasons.Any(r => r.Contains("The Name field is required.")));
+            Assert.IsTrue(e.Reasons.Any(r => r.Contains("The Password field is required.")));
+        }
+    }
+
+    [TestMethod]
     public async Task TestRegisterJson()
     {
         var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
