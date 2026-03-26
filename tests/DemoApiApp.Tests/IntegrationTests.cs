@@ -185,11 +185,47 @@ public class IntegrationTests
     }
 
     [TestMethod]
+    public async Task TestRegisterMissingRequired()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.RegisterForm(null!, null!)!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurBadApiInputException e)
+        {
+            Assert.AreEqual("Multiple errors were found in the API input. (2 errors)", e.Message);
+            Assert.HasCount(2, e.Reasons);
+            Assert.IsTrue(e.Reasons.Any(r => r.Contains("The Name field is required.")));
+            Assert.IsTrue(e.Reasons.Any(r => r.Contains("The Password field is required.")));
+        }
+    }
+
+    [TestMethod]
     public async Task TestRegisterJson()
     {
         var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
         var result = await sdk?.RegisterJson("anduin", "Password@1234")!;
         Assert.AreEqual("your-id-anduin", result.UserId);
+    }
+
+    [TestMethod]
+    public async Task TestRegisterJsonInvalid()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.RegisterJson("12345678901", "Password@1234")!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurBadApiInputException e)
+        {
+            Assert.AreEqual("Could NOT pass client side model validation! (Request not sent to server)", e.Message);
+            Assert.HasCount(1, e.Reasons);
+            Assert.AreEqual("The field Name must be a string or array type with a maximum length of '10'.",
+                e.Reasons.Single());
+        }
     }
 
     [TestMethod]

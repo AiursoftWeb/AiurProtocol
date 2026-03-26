@@ -2,6 +2,7 @@
 
 # Configuration matches .gitlab-ci.yml
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_TieredCompilation=0
 export PATH=$PATH:$HOME/.dotnet/tools
 
 RED='\033[0;31m'
