@@ -38,6 +38,13 @@ public class DemoAccess
         return result;
     }
 
+    public async Task<AiurResponse> NoActionAsync()
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "no-action", new { });
+        var result = await _http.Get<AiurResponse>(url);
+        return result;
+    }
+
     public async Task<AiurPagedCollection<int>> RedirectAsync()
     {
         var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "Redirect", new { });
