@@ -50,6 +50,7 @@ test:
         - build
     coverage: '/TOTAL_COVERAGE=(\d+.\d+)/'
     script:
+        - "export DOTNET_TieredCompilation=0"
         - |
             dotnet test *.sln --collect:"XPlat Code Coverage" --logger "junit;MethodFormat=Class;FailureBodyFormat=Verbose" || \
             (echo "Test failed. Retrying in 10 seconds..." && sleep 10 && dotnet test *.sln --collect:"XPlat Code Coverage" --logger "junit;MethodFormat=Class;FailureBodyFormat=Verbose") || \

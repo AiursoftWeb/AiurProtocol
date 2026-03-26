@@ -40,7 +40,12 @@ public class HomeController : ControllerBase
     public IActionResult Register([FromForm] RegisterAddressModel model)
     {
         // This logic will NOT execute if validation fails
-        return this.Protocol(new { UserId = "user-1" });
+        return this.Protocol(new RegisterViewModel 
+        { 
+            UserId = "user-1",
+            Code = Code.JobDone,
+            Message = "Registered."
+        });
     }
 }
 ```
@@ -50,7 +55,7 @@ If a client sends a request missing the `Name` field, they will receive a respon
 
 ```json
 {
-    "code": 400,
+    "code": -10,
     "message": "Multiple errors were found in the API input. (1 errors)",
     "items": [
         "The Name field is required."
