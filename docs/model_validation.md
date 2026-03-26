@@ -63,4 +63,30 @@ If a client sends a request missing the `Name` field, they will receive a respon
 }
 ```
 
-On the client side, if using `AiurProtocolClient`, this will throw an `AiurBadApiInputException` with the list of reasons.
+On the client side, if using `AiurProtocolClient`, it will perform **client-side validation** by default before sending any request to the server.
+
+### How it works
+
+1.  **Model Validation**: Before sending a request, `AiurProtocolClient` uses `Validator.TryValidateObject` to check if your input model passes all standard Data Annotations.
+2.  **Early Interception**: If validation fails on the client side, the request is **not sent** to the server.
+3.  **Exception**: An `AiurBadApiInputException` is thrown immediately.
+
+### Client-side Validation Response
+
+When client-side validation fails, the exception message will be:
+
+```text
+Could NOT pass client side model validation! (Request not sent to server)
+```
+
+The `Reasons` property of the `AiurBadApiInputException` will contain the validation error messages.
+
+### Disabling Client-side Validation
+
+If you want to skip client-side validation and let the server handle it (or for testing purposes), you can set the `disableClientSideValidation` parameter to `true`:
+
+```csharp
+var result = await _http.Post<RegisterViewModel>(url, payload, disableClientSideValidation: true);
+```
+
+In this case, the server will return a response like the one shown above, and `AiurProtocolClient` will throw an `AiurBadApiInputException` with the **server's error message**: `Multiple errors were found in the API input. (1 errors)`.

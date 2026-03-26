@@ -7,6 +7,7 @@ stages:
 
 before_script:
     - "export DOTNET_CLI_TELEMETRY_OPTOUT=1"
+    - "export DOTNET_TieredCompilation=0"
     - "export PATH=$PATH:$HOME/.dotnet/tools"
     - "which jb || dotnet tool install JetBrains.ReSharper.GlobalTools --global --add-source https://nuget.aiursoft.com/v3/index.json --configfile ./nuget.config -v d"
     - "which reportgenerator || dotnet tool install dotnet-reportgenerator-globaltool --global --add-source https://nuget.aiursoft.com/v3/index.json --configfile ./nuget.config -v d"
@@ -50,14 +51,13 @@ test:
         - build
     coverage: '/TOTAL_COVERAGE=(\d+.\d+)/'
     script:
-        - "export DOTNET_TieredCompilation=0"
         - |
             dotnet test *.sln --collect:"XPlat Code Coverage" --logger "junit;MethodFormat=Class;FailureBodyFormat=Verbose" || \
             (echo "Test failed. Retrying in 10 seconds..." && sleep 10 && dotnet test *.sln --collect:"XPlat Code Coverage" --logger "junit;MethodFormat=Class;FailureBodyFormat=Verbose") || \
             (echo "Test failed again. Retrying in 20 seconds..." && sleep 20 && dotnet test *.sln --collect:"XPlat Code Coverage" --logger "junit;MethodFormat=Class;FailureBodyFormat=Verbose")
         - reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"." -reporttypes:"cobertura"
         - COVERAGE_VALUE=$(grep -oPm 1 'line-rate="\K([0-9.]+)' "./Cobertura.xml")
-        - COVERAGE_PERCENTAGE=$(echo "scale=2; $COVERAGE_VALUE * 100" | bc)
+        - COVERAGE_PERCENTAGE=$(echo "$COVERAGE_VALUE" | awk '{printf "%.2f", $1 * 100}')
         - 'echo "TOTAL_COVERAGE=$COVERAGE_PERCENTAGE%"'
     artifacts:
         when: always

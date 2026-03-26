@@ -211,6 +211,24 @@ public class IntegrationTests
     }
 
     [TestMethod]
+    public async Task TestRegisterJsonInvalid()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.RegisterJson("12345678901", "Password@1234")!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurBadApiInputException e)
+        {
+            Assert.AreEqual("Could NOT pass client side model validation! (Request not sent to server)", e.Message);
+            Assert.HasCount(1, e.Reasons);
+            Assert.AreEqual("The field Name must be a string or array type with a maximum length of '10'.",
+                e.Reasons.Single());
+        }
+    }
+
+    [TestMethod]
     public async Task TestCrashKnown()
     {
         try
