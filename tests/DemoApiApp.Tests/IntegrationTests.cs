@@ -61,6 +61,15 @@ public class IntegrationTests
     }
 
     [TestMethod]
+    public async Task TestNoAction()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        var result = await sdk?.NoActionAsync()!;
+        Assert.AreEqual(Code.NoActionTaken, result.Code);
+        Assert.AreEqual("No action taken!", result.Message);
+    }
+
+    [TestMethod]
     public async Task TestStatusCode()
     {
         var request = new HttpRequestMessage(HttpMethod.Get, _endpointUrl + "/home/no-action")
