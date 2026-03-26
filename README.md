@@ -188,11 +188,11 @@ That's it! It will use your SDK to generate a new call to your server, and the r
   * [Result paging](./docs/result_paging.md)
 * Server Programming features
   * [Response complicated values](./docs/custom_response.md)
-  * [Return expected error](./inop.md)
-  * [Unexpected error](./inop.md)
+  * [Exception handling](./docs/exception_handling.md)
   * [Input valid state checking](./docs/model_validation.md)
 * SDK Programming
-  * [Error handling](./inop.md)
+  * [Exception handling](./docs/exception_handling.md)
+  * [Authentication and custom headers](./docs/authentication.md)
   * [Client side input validation](./docs/model_validation.md)
 
 ## Future features

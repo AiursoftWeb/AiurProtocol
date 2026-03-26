@@ -142,4 +142,26 @@ public class DemoAccess
         var result = await _http.Get<AiurResponse>(url);
         return result;
     }
+
+    public async Task<AiurResponse> NotFoundTestAsync()
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "NotFoundTest", new { });
+        return await _http.Get<AiurResponse>(url);
+    }
+
+    public async Task<AiurResponse> UnauthorizedTestAsync()
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "UnauthorizedTest", new { });
+        return await _http.Get<AiurResponse>(url);
+    }
+
+    public async Task<AiurResponse> AuthorizedTestAsync(string token)
+    {
+        var url = new AiurApiEndpoint(_demoServerLocator.Instance, "Home", "AuthorizedTest", new { });
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", $"Bearer {token}" }
+        };
+        return await _http.Get<AiurResponse>(url, headers: headers);
+    }
 }

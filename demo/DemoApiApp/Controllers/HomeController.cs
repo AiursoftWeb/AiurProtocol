@@ -117,6 +117,26 @@ public class HomeController : ControllerBase
         return Ok();
     }
 
+    public IActionResult NotFoundTest()
+    {
+        throw new AiurServerException(Code.NotFound, "Not found test");
+    }
+
+    public IActionResult UnauthorizedTest()
+    {
+        throw new AiurServerException(Code.Unauthorized, "Unauthorized test");
+    }
+
+    public IActionResult AuthorizedTest()
+    {
+        var authHeader = Request.Headers["Authorization"].ToString();
+        if (authHeader == "Bearer test-token")
+        {
+            return this.Protocol(Code.ResultShown, "Authorized!");
+        }
+        return this.Protocol(Code.Unauthorized, "Invalid token!");
+    }
+
     [Route("ViewContent/{SiteName}/{**FolderNames}")]
     public IActionResult ComplicatedRoute(ComplicatedRouteAddressModel model)
     {
