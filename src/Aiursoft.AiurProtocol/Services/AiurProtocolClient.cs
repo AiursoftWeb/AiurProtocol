@@ -42,7 +42,8 @@ public class AiurProtocolClient(
         AiurApiEndpoint aiurApiEndpoint,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = false)
+        bool enforceSameVersion = false,
+        IDictionary<string, string>? headers = null)
         where T : AiurResponse
     {
         if (!disableClientSideValidation)
@@ -56,6 +57,13 @@ public class AiurProtocolClient(
         };
 
         request.Headers.Add("accept", "application/json, text/html");
+        if (headers != null)
+        {
+            foreach (var (key, value) in headers)
+            {
+                request.Headers.Add(key, value);
+            }
+        }
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
         return await ProcessResponse<T>(response, enforceSameVersion);
@@ -68,7 +76,8 @@ public class AiurProtocolClient(
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = false) where T : AiurResponse
+        bool enforceSameVersion = false,
+        IDictionary<string, string>? headers = null) where T : AiurResponse
     {
         if (!disableClientSideValidation)
         {
@@ -84,6 +93,13 @@ public class AiurProtocolClient(
         };
 
         request.Headers.Add("accept", "application/json");
+        if (headers != null)
+        {
+            foreach (var (key, value) in headers)
+            {
+                request.Headers.Add(key, value);
+            }
+        }
 
         using var response = autoRetry ? await SendWithRetry(request) : await _client.SendAsync(request);
         return await ProcessResponse<T>(response, enforceSameVersion);
@@ -96,9 +112,10 @@ public class AiurProtocolClient(
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = false) where T : AiurResponse
+        bool enforceSameVersion = false,
+        IDictionary<string, string>? headers = null) where T : AiurResponse
     {
-        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Post, format, autoRetry, disableClientSideValidation, enforceSameVersion);
+        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Post, format, autoRetry, disableClientSideValidation, enforceSameVersion, headers);
     }
     
     public Task<T> Put<T>(
@@ -107,9 +124,10 @@ public class AiurProtocolClient(
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = false) where T : AiurResponse
+        bool enforceSameVersion = false,
+        IDictionary<string, string>? headers = null) where T : AiurResponse
     {
-        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Put, format, autoRetry, disableClientSideValidation, enforceSameVersion);
+        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Put, format, autoRetry, disableClientSideValidation, enforceSameVersion, headers);
     }
     
     public Task<T> Patch<T>(
@@ -118,9 +136,10 @@ public class AiurProtocolClient(
         BodyFormat format = BodyFormat.HttpFormBody,
         bool autoRetry = true,
         bool disableClientSideValidation = false,
-        bool enforceSameVersion = false) where T : AiurResponse
+        bool enforceSameVersion = false,
+        IDictionary<string, string>? headers = null) where T : AiurResponse
     {
-        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Patch, format, autoRetry, disableClientSideValidation, enforceSameVersion);
+        return Http<T>(aiurApiEndpoint, payload, HttpMethod.Patch, format, autoRetry, disableClientSideValidation, enforceSameVersion, headers);
     }
     
     private static void ClientSideValidate(object? input)

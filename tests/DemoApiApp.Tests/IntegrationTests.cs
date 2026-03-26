@@ -266,4 +266,61 @@ public class IntegrationTests
         var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
         _ = await sdk?.ComplicatedRoute("token", "site@name", "folder1/folder2/folder3")!;
     }
+
+    [TestMethod]
+    public async Task TestNotFound()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.NotFoundTestAsync()!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurUnexpectedServerResponseException e)
+        {
+            Assert.AreEqual(Code.NotFound, e.Response.Code);
+            Assert.AreEqual("Not found test", e.Response.Message);
+        }
+    }
+
+    [TestMethod]
+    public async Task TestUnauthorized()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.UnauthorizedTestAsync()!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurUnexpectedServerResponseException e)
+        {
+            Assert.AreEqual(Code.Unauthorized, e.Response.Code);
+            Assert.AreEqual("Unauthorized test", e.Response.Message);
+        }
+    }
+
+    [TestMethod]
+    public async Task TestAuthorizedWithValidHeader()
+    {
+        var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+        var result = await sdk?.AuthorizedTestAsync("test-token")!;
+        Assert.AreEqual(Code.ResultShown, result.Code);
+        Assert.AreEqual("Authorized!", result.Message);
+    }
+
+    [TestMethod]
+    public async Task TestAuthorizedWithInvalidHeader()
+    {
+        try
+        {
+            var sdk = _serviceProvider?.GetRequiredService<DemoAccess>();
+            _ = await sdk?.AuthorizedTestAsync("invalid-token")!;
+            Assert.Fail("Bad test should not pass");
+        }
+        catch (AiurUnexpectedServerResponseException e)
+        {
+            Assert.AreEqual(Code.Unauthorized, e.Response.Code);
+            Assert.AreEqual("Invalid token!", e.Response.Message);
+        }
+    }
 }
