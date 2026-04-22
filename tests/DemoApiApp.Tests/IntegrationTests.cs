@@ -16,6 +16,7 @@ public class IntegrationTests
     private readonly string _endpointUrl;
     private IHost? _server;
     private ServiceProvider? _serviceProvider;
+    private HttpClient? _httpClient;
 
     public IntegrationTests()
     {
@@ -31,7 +32,9 @@ public class IntegrationTests
 
         var services = new ServiceCollection();
         services.AddDemoService(_endpointUrl);
+        services.AddHttpClient();
         _serviceProvider = services.BuildServiceProvider();
+        _httpClient = _serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient();
     }
 
     [TestCleanup]
@@ -78,8 +81,7 @@ public class IntegrationTests
         };
 
         request.Headers.Add("accept", "application/json, text/html");
-        var client = new HttpClient();
-        var result = await client.SendAsync(request);
+        var result = await _httpClient!.SendAsync(request);
         Assert.AreEqual(202, (int)result.StatusCode);
     }
 
