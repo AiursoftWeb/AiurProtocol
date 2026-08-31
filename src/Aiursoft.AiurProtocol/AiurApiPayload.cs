@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Aiursoft.AiurProtocol;
 
@@ -20,10 +19,16 @@ public class AiurApiPayload
         {
             var propName = prop.Name;
             var propValue = prop.GetValue(param)?.ToString() ?? string.Empty;
-            var fromQuery = prop.GetCustomAttributes(typeof(IModelNameProvider), true).FirstOrDefault();
-            if (fromQuery is IModelNameProvider nameProvider && nameProvider.Name != null)
+            // Keep honoring ASP.NET Core's IModelNameProvider attributes when the client is
+            // used by a web app, without making the portable client library depend on the
+            // ASP.NET Core shared framework (which is unavailable on Android).
+            var modelNameAttribute = prop.GetCustomAttributes(true).FirstOrDefault(attribute =>
+                attribute.GetType().GetInterfaces().Any(contract =>
+                    contract.FullName == "Microsoft.AspNetCore.Mvc.ModelBinding.IModelNameProvider"));
+            var customName = modelNameAttribute?.GetType().GetProperty("Name")?.GetValue(modelNameAttribute) as string;
+            if (!string.IsNullOrEmpty(customName))
             {
-                propName = nameProvider.Name;
+                propName = customName;
             }
 
             if (prop.PropertyType == typeof(DateTime))
