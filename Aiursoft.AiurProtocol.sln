@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.AiurProtocol", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.AiurProtocol.Abstractions", "src\Aiursoft.AiurProtocol.Abstractions\Aiursoft.AiurProtocol.Abstractions.csproj", "{A1C8E1C7-8DFC-4F81-9C94-CCF74B5C79CC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{4085B9FC-714D-43B9-A13C-69519E83B193}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demos", "demos", "{4085B9FC-714D-43B9-A13C-69519E83B193}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApiApp", "demo\DemoApiApp\DemoApiApp.csproj", "{E42BD4B3-A946-4EB1-87D7-E04E5CC8BAB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApiApp", "demos\DemoApiApp\DemoApiApp.csproj", "{E42BD4B3-A946-4EB1-87D7-E04E5CC8BAB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApiApp.Sdk", "demo\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj", "{80028F83-4306-484A-812D-49A746CA7F20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApiApp.Sdk", "demos\DemoApiApp.Sdk\DemoApiApp.Sdk.csproj", "{80028F83-4306-484A-812D-49A746CA7F20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9E582F31-BC89-43C6-B451-930CC5A2A48C}"
 EndProject
