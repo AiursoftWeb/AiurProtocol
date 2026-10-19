@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>10.0.25</Version>
+    <Version>10.0.26</Version>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Aiursoft.AiurProtocol</AssemblyName>
     <RootNamespace>Aiursoft.AiurProtocol</RootNamespace>
@@ -17,9 +17,9 @@
     <PackageId>Aiursoft.AiurProtocol</PackageId>
     <PackageTags>pactice api handling</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.com/Aiursoft/AiurProtocol</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/aiurprotocol</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.com/Aiursoft/AiurProtocol.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/aiurprotocol.git</RepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>

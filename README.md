@@ -1,6 +1,6 @@
 # AiurProtocol
 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/-/blob/master/LICENSE)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AiursoftWeb/aiurprotocol/blob/master/LICENSE)
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/-/pipelines)
 [![NuGet version (Aiursoft.AiurProtocol)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol/)
