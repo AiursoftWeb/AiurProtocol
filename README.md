@@ -3,6 +3,7 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AiursoftWeb/aiurprotocol/blob/master/LICENSE)
 [![Pipeline stat](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/aiurprotocol/-/pipelines)
+[![S360 compliance](https://s360.aiursoft.com/badge.svg?project=aiursoft%2Faiurprotocol)](https://s360.aiursoft.com/SupplyChain?tab=projects&project=aiursoft%2Faiurprotocol&scope=baseline&ecosystem=all)
 [![NuGet version (Aiursoft.AiurProtocol)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol/)
 [![NuGet version (Aiursoft.AiurProtocol.Server)](https://img.shields.io/nuget/v/Aiursoft.AiurProtocol.Server.svg)](https://www.nuget.org/packages/Aiursoft.AiurProtocol.Server/)
 [![Man hours](https://manhours.aiursoft.com/r/github.com/aiursoftweb/aiurprotocol.svg)](https://manhours.aiursoft.com/r/github.com/aiursoftweb/aiurprotocol.html)
