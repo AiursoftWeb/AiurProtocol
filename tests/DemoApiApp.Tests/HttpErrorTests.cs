@@ -45,6 +45,27 @@ public sealed class HttpErrorTests
         Assert.AreEqual(1, handler.Calls);
     }
 
+    [TestMethod]
+    [DataRow(401, -1)]
+    [DataRow(409, -7)]
+    [DataRow(429, -11)]
+    [DataRow(503, -5)]
+    public async Task ProtocolErrorsKeepTheirTypeAndExposeHttpContextAsInnerException(int status, int code)
+    {
+        using var handler = new ErrorHandler((HttpStatusCode)status,
+            $$"""{"Code":{{code}},"Message":"API failed","ProtocolVersion":"10.0.3"}""");
+        await using var services = BuildProvider(handler);
+        var exception = await Assert.ThrowsAsync<AiurUnexpectedServerResponseException>(() =>
+            services.GetRequiredService<AiurProtocolClient>().Get<AiurResponse>(
+                new AiurApiEndpoint("https://alerts.example", "/incidents", new { }), autoRetry: false));
+        Assert.AreEqual((Code)code, exception.Response.Code);
+        var context = exception.InnerException as AiurHttpResponseException;
+        Assert.IsNotNull(context);
+        Assert.AreEqual((HttpStatusCode)status, context.StatusCode);
+        Assert.AreEqual(TimeSpan.FromSeconds(12), context.RetryAfter);
+        Assert.AreEqual(1, handler.Calls);
+    }
+
     private static ServiceProvider BuildProvider(HttpMessageHandler handler)
     {
         var services = new ServiceCollection();

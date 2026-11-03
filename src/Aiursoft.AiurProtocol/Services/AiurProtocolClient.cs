@@ -203,7 +203,8 @@ public class AiurProtocolClient(
                 {
                     // Other errors.
                     var model = JsonConvert.DeserializeObject<AiurResponse>(content, ProtocolSettings.JsonSettings)!;
-                    throw new AiurUnexpectedServerResponseException(model);
+                    throw new AiurUnexpectedServerResponseException(model,
+                        response.IsSuccessStatusCode ? null : HttpError(response, content));
                 }
             }
         }
@@ -214,8 +215,13 @@ public class AiurProtocolClient(
                 $"The {nameof(AiurProtocolClient)} can only handle AiurProtocol content while the remote server returned content: {content.SafeSubstring(100)}.");
         }
 
+        throw HttpError(response, content);
+    }
+
+    private static AiurHttpResponseException HttpError(HttpResponseMessage response, string content)
+    {
         var retryAfter = response.Headers.RetryAfter;
-        throw new AiurHttpResponseException(response.StatusCode,
+        return new AiurHttpResponseException(response.StatusCode,
             $"The remote server returned unexpected error content: {content.SafeSubstring(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.",
             retryAfter?.Delta ?? (retryAfter?.Date - DateTimeOffset.UtcNow));
     }
