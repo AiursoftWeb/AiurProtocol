@@ -214,8 +214,10 @@ public class AiurProtocolClient(
                 $"The {nameof(AiurProtocolClient)} can only handle AiurProtocol content while the remote server returned content: {content.SafeSubstring(100)}.");
         }
 
-        throw new WebException(
-            $"The remote server returned unexpected error content: {content.SafeSubstring(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.");
+        var retryAfter = response.Headers.RetryAfter;
+        throw new AiurHttpResponseException(response.StatusCode,
+            $"The remote server returned unexpected error content: {content.SafeSubstring(100)}. code: {response.StatusCode} - {response.ReasonPhrase}.",
+            retryAfter?.Delta ?? (retryAfter?.Date - DateTimeOffset.UtcNow));
     }
     
     private static async Task<string> GetResponseContent(HttpResponseMessage response)
