@@ -34,7 +34,7 @@ public class AiurApiEndpoint : AiurApiPayload
         {
             if (!paramsInAddress.Contains(param.Key) && !string.IsNullOrWhiteSpace(param.Value))
             {
-                appendPart = $"{appendPart}{param.Key.ToLower()}={Uri.EscapeDataString(param.Value)}&";
+                appendPart = $"{appendPart}{param.Key.ToLowerInvariant()}={Uri.EscapeDataString(param.Value)}&";
             }
         }
 
